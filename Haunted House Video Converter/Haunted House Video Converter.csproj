@@ -80,6 +80,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="avctoavi converter\avc2avi.exe" />
+    <Content Include="avctoavi converter\avc2avi_gui.exe" />
+    <Content Include="avctoavi converter\Changelog.txt" />
+    <Content Include="avctoavi converter\gpl.txt" />
+    <Content Include="avctoavi converter\License.txt" />
     <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

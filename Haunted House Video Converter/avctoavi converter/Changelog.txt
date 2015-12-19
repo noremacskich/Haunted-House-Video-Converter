@@ -1,0 +1,13 @@
+AVC2AVI GUI Changelog
+
+1.2
+ - Added the Status bar.
+ - Version now appears on the titlebar. 
+ - Added exception handling if AVC2AVI.EXE is not found.
+
+1.1 
+ - Added FPS control;
+ - Updated AVC2AVI.EXE to Revision 594
+
+1.0
+ - First release

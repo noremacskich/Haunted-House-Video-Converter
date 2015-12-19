@@ -1,0 +1,4 @@
+Not much to say. AVC2AVI GUI is freeware.
+
+AVC2AVI.EXE is Copyright (C) 2004 Laurent Aimar and licensed under the GNU GPL (General Public Lincense).
+AVC2AVI.EXE source code is available at the Videolan.org website, at this URL: http://git.videolan.org/gitweb.cgi?p=x264.git;a=blob;f=tools/avc2avi.c;hb=HEAD
