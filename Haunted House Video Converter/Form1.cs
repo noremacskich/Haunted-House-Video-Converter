@@ -16,10 +16,71 @@ namespace Haunted_House_Video_Converter
         public Form1()
         {
             InitializeComponent();
+
+            getSourceFolderPath();
+
         }
 
         List<string> originalFileNames = new List<string>();
 
+        List<string> ChannelFolderPaths = new List<string>();
+
+
+        string pathToOriginal;
+
+        private void getSourceFolderPath()
+        {
+
+            // Say what the dialog is about
+            folderBrowserDialog1.Description = "Please select the folder where all the Haunted House videos are.";
+
+            // Get the source path right away
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                // Make sure that the string ends with a \
+                pathToOriginal = folderBrowserDialog1.SelectedPath + '\\';
+            }
+
+            txtLocationOfOriginal.Text = pathToOriginal;
+
+        }
+
+        /// <summary>
+        /// This will create 16 folders with names of "CH01", "CH02", etc
+        /// Then it will move the appropriate files over to their respective folders.
+        /// This will not take into consideration the users channel names.
+        /// </summary>
+        private void createChannelFolders()
+        {
+            // check to see if we have already sorted the videos, if so, we are done.
+            if(!Directory.Exists(pathToOriginal + "Sorted_Videos"))
+            {
+
+                Directory.CreateDirectory(pathToOriginal + "Sorted_Videos");
+
+                Console.WriteLine(pathToOriginal + "Sorted_Videos");
+                
+            }
+            
+            // Be sure that we have a list of default directories.
+            for (int i = 1; i <= 16; i++)
+            {
+
+                string currentChannelPath = pathToOriginal + "Sorted_Videos\\" + "CH" + i.ToString("D2");
+
+                ChannelFolderPaths.Add(currentChannelPath);
+
+                if (!Directory.Exists(currentChannelPath))
+                {
+                    Directory.CreateDirectory(currentChannelPath);
+                }
+
+
+            }
+
+        }
 
         private void btnRenameMove_Click(object sender, EventArgs e)
         {
@@ -73,13 +134,12 @@ namespace Haunted_House_Video_Converter
 
         private void btnBrowserDialog_Click(object sender, EventArgs e)
         {
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            getSourceFolderPath();
+        }
 
-            if(result == DialogResult.OK)
-            {
-                txtLocationOfOriginal.Text = folderBrowserDialog1.SelectedPath;
-            }
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            createChannelFolders();
         }
     }
 }
