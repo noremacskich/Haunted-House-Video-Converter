@@ -17,12 +17,17 @@ namespace Haunted_House_Video_Converter
         {
             InitializeComponent();
 
+            // Do this now, so we don't have to worry about a null pathToOriginal variable.
             getSourceFolderPath();
 
+            // Do this now, so we have a list of channel folders to choose from.
+            createChannelFolders();
         }
 
         List<string> originalFileNames = new List<string>();
 
+        /// <summary>Contains the list of folders that the vidoes can be sorted into.  At first
+        /// it assumes that the camera order is 1-16.</summary>
         List<string> ChannelFolderPaths = new List<string>();
 
 
@@ -118,11 +123,26 @@ namespace Haunted_House_Video_Converter
                     string numbersFromString = new String(channelNumber.Where(x => x >= '0' && x <= '9').ToArray());
 
                     int intChannelNumber= Int32.Parse(numbersFromString);
+
+                    // Default file name layout - CH01-2015-10-22-17-51-05.avi
                     
+                    // Remove the "CH01-" from the string
+                    string fileDate = fileName.Substring(5);
+
+                    // Remove the ".avi" from the string
+                    fileDate = fileDate.Substring(0, fileDate.Length - 4);
+                    Console.WriteLine(fileDate);
+
+                    DateTime fileDateTime;
+
+                    DateTime.TryParseExact(fileDate, "yyyy-MM-dd-HH-mm-ss", null, System.Globalization.DateTimeStyles.None, out fileDateTime);
+
+
+                    string newFileName = channelNumber + fileDateTime.ToString(" - hh-mm-ss tt - dddd"); 
 
                     // move this file to the appropriate directoy in the sorted folder.  Need to have the file name as well
                     // List is a zero based index, so we need to subtract one form the number.
-                    Console.WriteLine("Moving File \"" + file + " to " + ChannelFolderPaths[intChannelNumber - 1] + fileName);
+                    Console.WriteLine("Moving File \"" + file + " to " + ChannelFolderPaths[intChannelNumber - 1] + newFileName);
                     //Directory.Move(file, );
 
                 }
