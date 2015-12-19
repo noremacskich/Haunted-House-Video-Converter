@@ -97,14 +97,11 @@ namespace Haunted_House_Video_Converter
             }
         }
 
+        /// <summary>
+        /// This will move the default files to the folders for each camera.  It will also rename the file to somthing similar to : 
+        /// "CH01 - HH-MM-SS PM - Thursday"
+        /// </summary>
         private void moveDefaultFilesToFolders()
-        {
-
-
-
-        }
-
-        private void btnRenameMove_Click(object sender, EventArgs e)
         {
 
             try
@@ -152,7 +149,8 @@ namespace Haunted_House_Video_Converter
                     // move this file to the appropriate directoy in the sorted folder.  Need to have the file name as well
                     // List is a zero based index, so we need to subtract one form the number.
                     Console.WriteLine("Moving File \"" + file + " to " + ChannelFolderPaths[intChannelNumber - 1] + newFileName);
-                    //Directory.Move(file, );
+
+                    //Directory.Move(file, ChannelFolderPaths[intChannelNumber - 1] + newFileName);
 
                 }
 
@@ -166,6 +164,13 @@ namespace Haunted_House_Video_Converter
                 Console.WriteLine(PathEx.Message);
             }
 
+
+        }
+
+        private void btnRenameMove_Click(object sender, EventArgs e)
+        {
+
+            moveDefaultFilesToFolders();
 
         }
 
