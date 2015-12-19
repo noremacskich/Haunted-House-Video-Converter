@@ -1,0 +1,1 @@
+﻿Basically this app is meant to help me convert Q-See videos into a readable format for youtube.  It will also help me rename and move the files.
