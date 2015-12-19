@@ -144,13 +144,13 @@ namespace Haunted_House_Video_Converter
                     DateTime.TryParseExact(fileDate, "yyyy-MM-dd-HH-mm-ss", null, System.Globalization.DateTimeStyles.None, out fileDateTime);
 
 
-                    string newFileName = channelNumber + fileDateTime.ToString(" - hh-mm-ss tt - dddd"); 
+                    string newFileName = channelNumber + fileDateTime.ToString(" - hh-mm-ss tt - dddd") + ".avi"; 
 
                     // move this file to the appropriate directoy in the sorted folder.  Need to have the file name as well
                     // List is a zero based index, so we need to subtract one form the number.
                     Console.WriteLine("Moving File \"" + file + " to " + ChannelFolderPaths[intChannelNumber - 1] + newFileName);
 
-                    //Directory.Move(file, ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+                    Directory.Move(file, ChannelFolderPaths[intChannelNumber - 1] + newFileName);
 
                 }
 
