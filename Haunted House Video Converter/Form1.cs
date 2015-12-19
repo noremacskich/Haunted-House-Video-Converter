@@ -22,6 +22,9 @@ namespace Haunted_House_Video_Converter
 
             // Do this now, so we have a list of channel folders to choose from.
             createChannelFolders();
+
+            // This is needed to make sure that the first popup will properly exit out of the whole application.
+            hasInitialized = true;
         }
 
         List<string> originalFileNames = new List<string>();
@@ -32,6 +35,7 @@ namespace Haunted_House_Video_Converter
 
 
         string pathToOriginal;
+        bool hasInitialized = false;
 
         private void getSourceFolderPath()
         {
@@ -46,6 +50,11 @@ namespace Haunted_House_Video_Converter
             {
                 // Make sure that the string ends with a \
                 pathToOriginal = folderBrowserDialog1.SelectedPath + '\\';
+            }
+            else if(!hasInitialized)
+            {
+                // Close out of the program
+                Application.Exit();
             }
 
             txtLocationOfOriginal.Text = pathToOriginal;
