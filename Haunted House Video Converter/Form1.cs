@@ -51,6 +51,8 @@ namespace Haunted_House_Video_Converter
         /// This will create 16 folders with names of "CH01", "CH02", etc
         /// Then it will move the appropriate files over to their respective folders.
         /// This will not take into consideration the users channel names.
+        /// This will also not check to see if the user has already customized the names.
+        /// This will also not check to see if the folders have already been filled.
         /// </summary>
         private void createChannelFolders()
         {
@@ -68,7 +70,7 @@ namespace Haunted_House_Video_Converter
             for (int i = 1; i <= 16; i++)
             {
 
-                string currentChannelPath = pathToOriginal + "Sorted_Videos\\" + "CH" + i.ToString("D2");
+                string currentChannelPath = pathToOriginal + "Sorted_Videos\\" + "CH" + i.ToString("D2") + "\\";
 
                 ChannelFolderPaths.Add(currentChannelPath);
 
@@ -79,6 +81,12 @@ namespace Haunted_House_Video_Converter
 
 
             }
+        }
+
+        private void moveDefaultFilesToFolders()
+        {
+
+
 
         }
 
@@ -87,35 +95,35 @@ namespace Haunted_House_Video_Converter
 
             try
             {
-                if (txtLocationOfOriginal.Text == string.Empty)
-                {
-                    return;
-                }
+                // Get the list of files in the directory
+                originalFileNames = Directory.EnumerateFiles(pathToOriginal, "*.avi").ToList();
 
-                originalFileNames = Directory.EnumerateFiles(txtLocationOfOriginal.Text, "*.avi").ToList();
-
+                // Go through each, and get them into the correct directory.
                 foreach(string file in originalFileNames)
                 {
-                    Console.WriteLine(file);
+                    //Console.WriteLine(file);
 
-                    // Split up the string based on the directory seperator
-                    string[] pathSplit = file.Split('\\');
+                    // Get the filename for this path
+                    string fileName = file.Split('\\').Last();
 
-                    foreach (string split in pathSplit)
-                    {
-                        Console.WriteLine(split);
-                    }
+                    //Console.WriteLine("File Name " + fileName);
 
+                    // Get the Channel number for this file.  It should be the first thing in the file name
+                    string channelNumber = fileName.Split('-').First();
+                    //Console.WriteLine("Channel Number " + channelNumber);
 
-                    // Get the last one, as that is the file name.
-                    string fileName = pathSplit.Last();
+                    // Get the actual number from the Channel Number string
+                    // Pull out only the numbers from the string using LINQ
 
-                    // Now need to split this up even further, based on the -
-                    string[] fileSplit = fileName.Split('-');
-                    foreach(string nameSplit in fileSplit)
-                    {
-                        Console.WriteLine(nameSplit);
-                    }
+                    string numbersFromString = new String(channelNumber.Where(x => x >= '0' && x <= '9').ToArray());
+
+                    int intChannelNumber= Int32.Parse(numbersFromString);
+                    
+
+                    // move this file to the appropriate directoy in the sorted folder.  Need to have the file name as well
+                    // List is a zero based index, so we need to subtract one form the number.
+                    Console.WriteLine("Moving File \"" + file + " to " + ChannelFolderPaths[intChannelNumber - 1] + fileName);
+                    //Directory.Move(file, );
 
                 }
 
