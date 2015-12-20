@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace Haunted_House_Video_Converter
 {
@@ -191,6 +192,45 @@ namespace Haunted_House_Video_Converter
 
         }
 
+        private void convertFiles(string source, string destination)
+        {
+            source = lstNewFileNames.First();
+            destination = pathToOriginal + "TestAVIRun.avi";
+
+            // Prepare the process to run
+            ProcessStartInfo start = new ProcessStartInfo();
+            // Enter in the command line arguments, everything you would enter after the executable name itself
+            start.Arguments = " -i \"" + source + "\" -o \"" + destination + "\" -f 29.97";
+            // Enter the executable to run, including the complete path
+            start.FileName = "\"" + Directory.GetCurrentDirectory() + "\\avctoavi converter\\avc2avi.exe\"";
+            // Do you want to show a console window?
+            start.WindowStyle = ProcessWindowStyle.Hidden;
+            start.CreateNoWindow = true;
+            int exitCode;
+
+            Console.WriteLine("Waiting for {" + start.FileName + start.Arguments + "} to stop.");
+
+            
+            // Run the external process & wait for it to finish
+            using (Process proc = Process.Start(start))
+            {
+                Console.WriteLine("Waiting for stop signal");
+                proc.WaitForExit();
+
+                // Retrieve the app's exit code
+                exitCode = proc.ExitCode;
+
+                if(exitCode != 0)
+                {
+                    Console.WriteLine("Error : " + proc.StandardError);
+                }
+
+                Console.WriteLine("All Done : exit code of " + exitCode.ToString());
+            }
+
+
+        }
+
         private void btnRenameMove_Click(object sender, EventArgs e)
         {
 
@@ -206,6 +246,8 @@ namespace Haunted_House_Video_Converter
         private void button2_Click(object sender, EventArgs e)
         {
             getExistingVidoes();
+
+            convertFiles(lstNewFileNames.First(), pathToOriginal + "TestAVIRun.avi");
         }
     }
 }
