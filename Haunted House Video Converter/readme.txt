@@ -30,3 +30,9 @@ So we have three directory types :
 		Also the individual file size differences should be no greater than 2mb when compared with the original videos.
 			If it is, then keep track of it in the lstConvertedFilesToCheck list.
 		Files in this immediate directory will be referred to as "Converted"
+
+
+Youtube Stuff :
+
+	Using this as a guidence for setting things up : https://developers.google.com/api-client-library/dotnet/get_started
+	Using this as a guidence for coding things : https://github.com/youtube/api-samples/tree/master/dotnet
