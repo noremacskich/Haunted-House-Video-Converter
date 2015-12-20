@@ -384,9 +384,9 @@
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(9, 346);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(133, 13);
+            this.label18.Size = new System.Drawing.Size(159, 13);
             this.label18.TabIndex = 36;
-            this.label18.Text = "Location of Original Videos";
+            this.label18.Text = "Destination of Converted Videos";
             // 
             // button2
             // 

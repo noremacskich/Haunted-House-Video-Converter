@@ -192,17 +192,20 @@ namespace Haunted_House_Video_Converter
 
         }
 
+        /// <summary>
+        ///  Citing my sources : http://stackoverflow.com/a/240610
+        /// </summary>
         private void convertFiles(string source, string destination)
         {
-            source = lstNewFileNames.First();
-            destination = pathToOriginal + "TestAVIRun.avi";
-
             // Prepare the process to run
             ProcessStartInfo start = new ProcessStartInfo();
+
             // Enter in the command line arguments, everything you would enter after the executable name itself
             start.Arguments = " -i \"" + source + "\" -o \"" + destination + "\" -f 29.97";
+
             // Enter the executable to run, including the complete path
             start.FileName = "\"" + Directory.GetCurrentDirectory() + "\\avctoavi converter\\avc2avi.exe\"";
+
             // Do you want to show a console window?
             start.WindowStyle = ProcessWindowStyle.Hidden;
             start.CreateNoWindow = true;
@@ -231,6 +234,48 @@ namespace Haunted_House_Video_Converter
 
         }
 
+        /// <summary>
+        /// This will process any files that have yet to be converted over to the youtube friendly version.
+        /// It will also create the "Converted_Videos" folder and any sub directories needed for each channel.
+        /// </summary>
+        private void processTheFiles()
+        {
+
+            List<string> lstConvertedFileNames;
+
+            lstNewFileNames = Directory.EnumerateFiles(pathToOriginal + "Sorted_Videos", "*.avi", SearchOption.AllDirectories).ToList();
+
+            if(!Directory.Exists(pathToOriginal + "Converted_Videos"))
+            {
+                Directory.CreateDirectory(pathToOriginal + "Converted_Videos");
+            }
+
+            lstConvertedFileNames = Directory.EnumerateFiles(pathToOriginal + "Converted_Videos", "*.avi", SearchOption.AllDirectories).ToList();
+
+
+            foreach (string file in lstNewFileNames.Except(lstConvertedFileNames))
+            {
+
+                // Get the filename for this path
+                string fileName = file.Split('\\').Last();
+
+                // Get the Channel number for this file.  It should be the first thing in the file name
+                string channelNumber = fileName.Split('-').First().Trim();
+
+
+                // If channelNumber doesn't exist, create it
+                if (!Directory.Exists(pathToOriginal + "Converted_Videos\\" + channelNumber))
+                {
+                    Directory.CreateDirectory(pathToOriginal + "Converted_Videos\\" + channelNumber);
+                }
+                
+                convertFiles(file, pathToOriginal + "Converted_Videos\\" + channelNumber + "\\" + fileName);
+            }
+
+
+        }
+
+
         private void btnRenameMove_Click(object sender, EventArgs e)
         {
 
@@ -247,7 +292,7 @@ namespace Haunted_House_Video_Converter
         {
             getExistingVidoes();
 
-            convertFiles(lstNewFileNames.First(), pathToOriginal + "TestAVIRun.avi");
+            processTheFiles();
         }
     }
 }
