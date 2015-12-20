@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Haunted_House_Video_Converter
 {
@@ -73,6 +74,12 @@ namespace Haunted_House_Video_Converter
 
         bool hasInitialized = false;
 
+        private string getFileName(string path)
+        {
+            return path.Split('\\').Last();
+        }
+
+
         private void getSourceFolderPath()
         {
 
@@ -136,62 +143,86 @@ namespace Haunted_House_Video_Converter
         /// <summary>
         /// This will move the default files to the folders for each camera.  It will also rename the file to somthing similar to : 
         /// "CH01 - HH-MM-SS PM - Thursday"
+        /// Aiming to have this start automatically on startup.
         /// </summary>
-        private void moveDefaultFilesToFolders()
+        private void moveOriginalFilesToSortedFolders()
+        {
+
+            // First lets check to see if there are any files that have yet to be moved :
+            List<string> lstOriginalFiles = Directory.EnumerateFiles(pathToOriginal, "*.avi").ToList();
+
+            if(lstOriginalFiles.Count() > 0)
+            {
+                // Lookes like we have some files to move, but first, lets make sure that each of these files are 
+                // formatted with the default file names.  Any custom file must be handled by the user manually.
+
+                foreach(string originalFile in lstOriginalFiles)
+                {
+                    string fileName = getFileName(originalFile);
+
+                    string defaultFileFormat = "CH\\d\\d-\\d\\d\\d\\d-\\d\\d-\\d\\d-\\d\\d-\\d\\d-\\d\\d\\.avi";
+
+                    if(Regex.Match(fileName, defaultFileFormat).Success)
+                    {
+                        // Move and rename the file to the sorted directory.
+                        moveFileToSortedDirectory(originalFile);
+                        
+                    }
+
+                }
+
+            }
+
+            // Otherwise, just ignore this file.
+
+        }
+        
+        /// <summary>
+        /// Move the given file to the Sorted Directory, while renameing it to the following : "CH01 - HH-MM-SS PM - Thursday"
+        /// Keeping track of which files have been converted is the responsibility of the processTheseFiles function.
+        /// </summary>
+        private void moveFileToSortedDirectory(string pathToFile)
         {
 
             try
             {
-                // Get the list of files in the directory
-                originalFileNames = Directory.EnumerateFiles(pathToOriginal, "*.avi").ToList();
+                // Get the filename for this path
+                string fileName = getFileName(pathToFile);
 
-                // Go through each, and get them into the correct directory.
-                foreach(string file in originalFileNames)
-                {
-                    //Console.WriteLine(file);
-
-                    // Get the filename for this path
-                    string fileName = file.Split('\\').Last();
-
-                    //Console.WriteLine("File Name " + fileName);
-
-                    // Get the Channel number for this file.  It should be the first thing in the file name
-                    string channelNumber = fileName.Split('-').First();
-                    //Console.WriteLine("Channel Number " + channelNumber);
-
-                    // Get the actual number from the Channel Number string
-                    // Pull out only the numbers from the string using LINQ
-
-                    string numbersFromString = new String(channelNumber.Where(x => x >= '0' && x <= '9').ToArray());
-
-                    int intChannelNumber= Int32.Parse(numbersFromString);
-
-                    // Default file name layout - CH01-2015-10-22-17-51-05.avi
-                    
-                    // Remove the "CH01-" from the string
-                    string fileDate = fileName.Substring(5);
-
-                    // Remove the ".avi" from the string
-                    fileDate = fileDate.Substring(0, fileDate.Length - 4);
-                    Console.WriteLine(fileDate);
-
-                    DateTime fileDateTime;
-
-                    DateTime.TryParseExact(fileDate, "yyyy-MM-dd-HH-mm-ss", null, System.Globalization.DateTimeStyles.None, out fileDateTime);
+                // Get the Channel number for this file.  It should be the first thing in the file name
+                string channelNumber = fileName.Split('-').First();
+                //Console.WriteLine("Channel Number " + channelNumber);
 
 
-                    string newFileName = channelNumber + fileDateTime.ToString(" - hh-mm-ss tt - dddd") + ".avi"; 
+                // Get the actual number from the Channel Number string
+                // Pull out only the numbers from the string using LINQ
 
-                    // move this file to the appropriate directoy in the sorted folder.  Need to have the file name as well
-                    // List is a zero based index, so we need to subtract one form the number.
-                    Console.WriteLine("Moving File \"" + file + " to " + ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+                string numbersFromString = new String(channelNumber.Where(x => x >= '0' && x <= '9').ToArray());
+                int intChannelNumber = Int32.Parse(numbersFromString);
 
-                    Directory.Move(file, ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+                // Default file name layout - CH01-2015-10-22-17-51-05.avi
 
-                    // Keep track of all the files.
-                    lstNewFileNames.Add(ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+                // Remove the "CH01-" from the string
+                string fileDate = fileName.Substring(5);
 
-                }
+                // Remove the ".avi" from the string
+                fileDate = fileDate.Substring(0, fileDate.Length - 4);
+                //Console.WriteLine(fileDate);
+
+                DateTime fileDateTime;
+
+                DateTime.TryParseExact(fileDate, "yyyy-MM-dd-HH-mm-ss", null, System.Globalization.DateTimeStyles.None, out fileDateTime);
+
+                string newFileName = channelNumber + fileDateTime.ToString(" - hh-mm-ss tt - dddd") + ".avi";
+                
+                // move this file to the appropriate directoy in the sorted folder.  Need to have the file name as well
+                // List is a zero based index, so we need to subtract one form the number.
+                Console.WriteLine("Moving File \"" + pathToFile + " to " + ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+
+                Directory.Move(pathToFile, ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+
+                // Keep track of all the files.
+                lstNewFileNames.Add(ChannelFolderPaths[intChannelNumber - 1] + newFileName);
 
             }
             catch (UnauthorizedAccessException UAEx)
@@ -202,7 +233,6 @@ namespace Haunted_House_Video_Converter
             {
                 Console.WriteLine(PathEx.Message);
             }
-
 
         }
 
@@ -304,7 +334,6 @@ namespace Haunted_House_Video_Converter
                 Console.WriteLine("All Done : exit code of " + exitCode.ToString());
             }
 
-
         }
 
         /// <summary>
@@ -357,7 +386,7 @@ namespace Haunted_House_Video_Converter
         private void btnRenameMove_Click(object sender, EventArgs e)
         {
 
-            moveDefaultFilesToFolders();
+            moveOriginalFilesToSortedFolders();
 
         }
 
