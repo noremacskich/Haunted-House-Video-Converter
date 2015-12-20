@@ -33,6 +33,8 @@ namespace Haunted_House_Video_Converter
         /// it assumes that the camera order is 1-16.</summary>
         List<string> ChannelFolderPaths = new List<string>();
 
+        List<string> lstNewFileNames = new List<string>();
+
 
         string pathToOriginal;
         bool hasInitialized = false;
@@ -152,6 +154,9 @@ namespace Haunted_House_Video_Converter
 
                     Directory.Move(file, ChannelFolderPaths[intChannelNumber - 1] + newFileName);
 
+                    // Keep track of all the files.
+                    lstNewFileNames.Add(ChannelFolderPaths[intChannelNumber - 1] + newFileName);
+
                 }
 
             }
@@ -164,6 +169,25 @@ namespace Haunted_House_Video_Converter
                 Console.WriteLine(PathEx.Message);
             }
 
+
+        }
+
+        /// <summary>At this point we know that we have a Sorted_Videos folder.  
+        /// We now just need to get the files from it.</summary>
+        private void getExistingVidoes()
+        {
+            string channelDirectory = pathToOriginal + "Sorted_Videos\\";
+
+            // Get the list of files in the directory
+            lstNewFileNames = Directory.EnumerateFiles(pathToOriginal, "*.avi", SearchOption.AllDirectories).ToList();
+
+            // Debug
+            //foreach(string file in lstNewFileNames)
+            //{
+
+            //    Console.WriteLine(file);
+
+            //}
 
         }
 
@@ -181,7 +205,7 @@ namespace Haunted_House_Video_Converter
 
         private void button2_Click(object sender, EventArgs e)
         {
-            createChannelFolders();
+            getExistingVidoes();
         }
     }
 }
