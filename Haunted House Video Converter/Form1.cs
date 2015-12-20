@@ -72,6 +72,8 @@ namespace Haunted_House_Video_Converter
         private void btnMoveDefaultAndRename_Click(object sender, EventArgs e)
         {
             preppingFilesForUpload.moveOriginalFilesToSortedFolders();
+
+            btnMoveDefaultAndRename.BackColor = Color.Green;
         }
     }
 }

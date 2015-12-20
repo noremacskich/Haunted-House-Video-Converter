@@ -135,7 +135,7 @@ namespace Haunted_House_Video_Converter
             }
 
             // Otherwise, just ignore this file.
-
+            
         }
 
         /// <summary>
@@ -144,6 +144,8 @@ namespace Haunted_House_Video_Converter
         /// </summary>
         private void moveFileToSortedDirectory(string pathToFile)
         {
+            // Create the Sorted Directory if it doesn't exist
+            createChannelFolders();
 
             try
             {
