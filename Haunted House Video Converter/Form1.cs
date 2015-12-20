@@ -383,13 +383,6 @@ namespace Haunted_House_Video_Converter
 
         }
 
-        private void btnRenameMove_Click(object sender, EventArgs e)
-        {
-
-            moveOriginalFilesToSortedFolders();
-
-        }
-
         private void btnBrowserDialog_Click(object sender, EventArgs e)
         {
             getSourceFolderPath();
@@ -400,6 +393,11 @@ namespace Haunted_House_Video_Converter
             getExistingVidoes();
 
             processTheFiles();
+        }
+
+        private void btnMoveDefaultAndRename_Click(object sender, EventArgs e)
+        {
+            moveOriginalFilesToSortedFolders();
         }
     }
 }
