@@ -197,6 +197,18 @@ namespace Haunted_House_Video_Converter
         /// </summary>
         private void convertFiles(string source, string destination)
         {
+
+            // Make sure that the source exists
+            if (!File.Exists(source))
+            {
+                throw new Exception("The given source \"" + source + "\" doesn't exist.");
+            }
+            if (File.Exists(destination))
+            {
+                throw new Exception("The destination file \"" + destination + "\" exists already.");
+            }
+
+
             // Prepare the process to run
             ProcessStartInfo start = new ProcessStartInfo();
 
@@ -253,11 +265,17 @@ namespace Haunted_House_Video_Converter
             lstConvertedFileNames = Directory.EnumerateFiles(pathToOriginal + "Converted_Videos", "*.avi", SearchOption.AllDirectories).ToList();
 
 
-            foreach (string file in lstNewFileNames.Except(lstConvertedFileNames))
-            {
+            List<string> convertedFileNames = lstConvertedFileNames.Select(x => x.Split('\\').Last()).ToList();
 
-                // Get the filename for this path
-                string fileName = file.Split('\\').Last();
+            List<string> sortedFileNames = lstNewFileNames.Select(x => x.Split('\\').Last()).ToList();
+
+
+
+            List<string> filesToConvert = sortedFileNames.Except(convertedFileNames).ToList();
+
+
+            foreach (string fileName in filesToConvert)
+            {
 
                 // Get the Channel number for this file.  It should be the first thing in the file name
                 string channelNumber = fileName.Split('-').First().Trim();
@@ -269,7 +287,7 @@ namespace Haunted_House_Video_Converter
                     Directory.CreateDirectory(pathToOriginal + "Converted_Videos\\" + channelNumber);
                 }
                 
-                convertFiles(file, pathToOriginal + "Converted_Videos\\" + channelNumber + "\\" + fileName);
+                convertFiles(pathToOriginal + "Sorted_Videos\\" + channelNumber + "\\" + fileName, pathToOriginal + "Converted_Videos\\" + channelNumber + "\\" + fileName);
             }
 
 
