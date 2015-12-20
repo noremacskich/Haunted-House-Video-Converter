@@ -36,12 +36,41 @@ namespace Haunted_House_Video_Converter
 
         List<string> lstNewFileNames = new List<string>();
 
-        /// <summary>A list of files that should be checked to make sure that they are the same.
-        /// In order to get into this list, the difference between the source and destination videos
-        /// must be greater than 2mb.</summary>
+        /// <summary>
+        ///  A list of files that should be checked to make sure that they are the same.
+        ///  In order to get into this list, the difference between the source and destination videos
+        ///  must be greater than 2mb.
+        /// </summary>
         List<string> lstConvertedFilesToCheck = new List<string>();
 
-        string pathToOriginal;
+        /// <summary>This is the path to the directory where all the videos were initially stored.</summary>
+        private string pathToOriginal { get; set; }
+
+        /// <summary>
+        ///  This is where the videos are moved to in the sorting process.  The videos are moved from the 
+        ///  pathToOriginal dirctory to the respective channels in this directory.
+        /// </summary>
+        private string pathToSortedVideos
+        {
+            get
+            {
+                return pathToOriginal + "Sorted_Videos\\";
+            }
+        }
+
+        /// <summary>
+        ///  This is where the videos are stored once they have been converted.  This should have an identical structure to the Sorted_Videos directory.  
+        ///  Also the individual file size differences should be no greater than 2mb when compared with the original videos.
+        ///  If it is, then keep track of it in the lstConvertedFilesToCheck list.
+        /// </summary>
+        private string pathToConvertedVideos
+        {
+            get
+            {
+                return pathToOriginal + "Converted_Videos\\";
+            }
+        }
+
         bool hasInitialized = false;
 
         private void getSourceFolderPath()
@@ -78,12 +107,12 @@ namespace Haunted_House_Video_Converter
         private void createChannelFolders()
         {
             // check to see if we have already sorted the videos, if so, we are done.
-            if(!Directory.Exists(pathToOriginal + "Sorted_Videos"))
+            if(!Directory.Exists(pathToSortedVideos))
             {
 
-                Directory.CreateDirectory(pathToOriginal + "Sorted_Videos");
+                Directory.CreateDirectory(pathToSortedVideos);
 
-                Console.WriteLine(pathToOriginal + "Sorted_Videos");
+                //Console.WriteLine(pathToSortedVideos);
                 
             }
             
@@ -91,7 +120,7 @@ namespace Haunted_House_Video_Converter
             for (int i = 1; i <= 16; i++)
             {
 
-                string currentChannelPath = pathToOriginal + "Sorted_Videos\\" + "CH" + i.ToString("D2") + "\\";
+                string currentChannelPath = pathToSortedVideos + "CH" + i.ToString("D2") + "\\";
 
                 ChannelFolderPaths.Add(currentChannelPath);
 
@@ -181,7 +210,7 @@ namespace Haunted_House_Video_Converter
         /// We now just need to get the files from it.</summary>
         private void getExistingVidoes()
         {
-            string channelDirectory = pathToOriginal + "Sorted_Videos\\";
+            string channelDirectory = pathToSortedVideos;
 
             // Get the list of files in the directory
             lstNewFileNames = Directory.EnumerateFiles(pathToOriginal, "*.avi", SearchOption.AllDirectories).ToList();
@@ -287,7 +316,7 @@ namespace Haunted_House_Video_Converter
 
             List<string> lstConvertedFileNames;
 
-            lstNewFileNames = Directory.EnumerateFiles(pathToOriginal + "Sorted_Videos", "*.avi", SearchOption.AllDirectories).ToList();
+            lstNewFileNames = Directory.EnumerateFiles(pathToSortedVideos, "*.avi", SearchOption.AllDirectories).ToList();
 
             if(!Directory.Exists(pathToOriginal + "Converted_Videos"))
             {
@@ -319,12 +348,11 @@ namespace Haunted_House_Video_Converter
                     Directory.CreateDirectory(pathToOriginal + "Converted_Videos\\" + channelNumber);
                 }
                 
-                convertFiles(pathToOriginal + "Sorted_Videos\\" + channelNumber + "\\" + fileName, pathToOriginal + "Converted_Videos\\" + channelNumber + "\\" + fileName);
+                convertFiles(pathToSortedVideos + channelNumber + "\\" + fileName, pathToOriginal + "Converted_Videos\\" + channelNumber + "\\" + fileName);
             }
 
 
         }
-
 
         private void btnRenameMove_Click(object sender, EventArgs e)
         {
