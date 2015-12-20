@@ -318,12 +318,12 @@ namespace Haunted_House_Video_Converter
 
             lstNewFileNames = Directory.EnumerateFiles(pathToSortedVideos, "*.avi", SearchOption.AllDirectories).ToList();
 
-            if(!Directory.Exists(pathToOriginal + "Converted_Videos"))
+            if(!Directory.Exists(pathToConvertedVideos))
             {
-                Directory.CreateDirectory(pathToOriginal + "Converted_Videos");
+                Directory.CreateDirectory(pathToConvertedVideos);
             }
 
-            lstConvertedFileNames = Directory.EnumerateFiles(pathToOriginal + "Converted_Videos", "*.avi", SearchOption.AllDirectories).ToList();
+            lstConvertedFileNames = Directory.EnumerateFiles(pathToConvertedVideos, "*.avi", SearchOption.AllDirectories).ToList();
 
 
             List<string> convertedFileNames = lstConvertedFileNames.Select(x => x.Split('\\').Last()).ToList();
@@ -343,12 +343,12 @@ namespace Haunted_House_Video_Converter
 
 
                 // If channelNumber doesn't exist, create it
-                if (!Directory.Exists(pathToOriginal + "Converted_Videos\\" + channelNumber))
+                if (!Directory.Exists(pathToConvertedVideos + channelNumber))
                 {
-                    Directory.CreateDirectory(pathToOriginal + "Converted_Videos\\" + channelNumber);
+                    Directory.CreateDirectory(pathToConvertedVideos + channelNumber);
                 }
                 
-                convertFiles(pathToSortedVideos + channelNumber + "\\" + fileName, pathToOriginal + "Converted_Videos\\" + channelNumber + "\\" + fileName);
+                convertFiles(pathToSortedVideos + channelNumber + "\\" + fileName, pathToConvertedVideos + channelNumber + "\\" + fileName);
             }
 
 
