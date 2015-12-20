@@ -36,6 +36,10 @@ namespace Haunted_House_Video_Converter
 
         List<string> lstNewFileNames = new List<string>();
 
+        /// <summary>A list of files that should be checked to make sure that they are the same.
+        /// In order to get into this list, the difference between the source and destination videos
+        /// must be greater than 2mb.</summary>
+        List<string> lstConvertedFilesToCheck = new List<string>();
 
         string pathToOriginal;
         bool hasInitialized = false;
@@ -221,11 +225,17 @@ namespace Haunted_House_Video_Converter
             // Do you want to show a console window?
             start.WindowStyle = ProcessWindowStyle.Hidden;
             start.CreateNoWindow = true;
+
+            // Cause any errors to be handled locally, not by the operating system
+            // Inspiration : http://stackoverflow.com/questions/5210950/how-to-detect-an-application-executed-by-a-process-whether-the-application-stops
+            start.RedirectStandardOutput = true;
+            start.UseShellExecute = false;
+            
             int exitCode;
 
             Console.WriteLine("Waiting for {" + start.FileName + start.Arguments + "} to stop.");
 
-            
+
             // Run the external process & wait for it to finish
             using (Process proc = Process.Start(start))
             {
@@ -237,7 +247,29 @@ namespace Haunted_House_Video_Converter
 
                 if(exitCode != 0)
                 {
-                    Console.WriteLine("Error : " + proc.StandardError);
+
+                    Console.WriteLine("avc2avi.exe did crash, checking to see if file size difference between the source and destination is bigger than 2mb.");
+
+                    // Make sure that the source and destination files are the same size, if so, it was converted successfully
+                    FileInfo sourceAttributes = new FileInfo(source);
+                    FileInfo destinationAttributes = new FileInfo(destination);
+
+                    long sourceSize = sourceAttributes.Length;
+                    long destinationSize = destinationAttributes.Length;
+
+                    // If the difference in size between the two files is greater than 2mb, then note it, otherwise continue on.
+                    // Yes 2mb is kinda arbituary, and an educated guess.
+                    if(Math.Abs(sourceSize - destinationSize) > 2000000)
+                    {
+                        Console.WriteLine("Difference between source and destination files was bigger than 2mb.");
+                        Console.WriteLine("Affected File : " + source);
+                        lstConvertedFilesToCheck.Add(source);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nope, assuming that this was a successful conversion.  Moving on to the next file.");
+                    }
+
                 }
 
                 Console.WriteLine("All Done : exit code of " + exitCode.ToString());
