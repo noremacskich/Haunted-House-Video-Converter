@@ -423,6 +423,7 @@
             this.btnUploadToYouTube.TabIndex = 32;
             this.btnUploadToYouTube.Text = "Uploaded Files to Youtube";
             this.btnUploadToYouTube.UseVisualStyleBackColor = true;
+            this.btnUploadToYouTube.Click += new System.EventHandler(this.btnUploadToYouTube_Click);
             // 
             // Form1
             // 

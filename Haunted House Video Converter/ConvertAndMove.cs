@@ -56,6 +56,16 @@ namespace Haunted_House_Video_Converter
             }
         }
 
+        public List<string> lstFilesToUpload
+        {
+            get
+            {
+                // Stub, need to figure out way of figuring out which ones have been uploaded already.
+                // Most likely a text file of some sort keeping track of that.
+                return Directory.EnumerateFiles(pathToSortedVideos, "*.avi", SearchOption.AllDirectories).ToList();
+            }
+       }
+
         public bool hasInitialized = false;
 
         private string getFileName(string path)
