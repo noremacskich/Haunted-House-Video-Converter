@@ -86,6 +86,66 @@ namespace Haunted_House_Video_Converter
 
             string thisFile = preppingFilesForUpload.lstFilesToUpload.First();
 
+            string channelID = preppingFilesForUpload.getChannelId(thisFile);
+
+            string videoTitle = preppingFilesForUpload.getVideoTitle(thisFile);
+
+            string RoomIdentification;
+
+            switch (channelID)
+            {
+                case "CH01" :
+                    RoomIdentification = txtCH01.Text;
+                    break;
+                case "CH02":
+                    RoomIdentification = txtCH02.Text;
+                    break;
+                case "CH03":
+                    RoomIdentification = txtCH03.Text;
+                    break;
+                case "CH04":
+                    RoomIdentification = txtCH04.Text;
+                    break;
+                case "CH05":
+                    RoomIdentification = txtCH05.Text;
+                    break;
+                case "CH06":
+                    RoomIdentification = txtCH06.Text;
+                    break;
+                case "CH07":
+                    RoomIdentification = txtCH07.Text;
+                    break;
+                case "CH08":
+                    RoomIdentification = txtCH08.Text;
+                    break;
+                case "CH09":
+                    RoomIdentification = txtCH09.Text;
+                    break;
+                case "CH10":
+                    RoomIdentification = txtCH10.Text;
+                    break;
+                case "CH11":
+                    RoomIdentification = txtCH11.Text;
+                    break;
+                case "CH12":
+                    RoomIdentification = txtCH12.Text;
+                    break;
+                case "CH13":
+                    RoomIdentification = txtCH13.Text;
+                    break;
+                case "CH14":
+                    RoomIdentification = txtCH14.Text;
+                    break;
+                case "CH15":
+                    RoomIdentification = txtCH15.Text;
+                    break;
+                case "CH16":
+                    RoomIdentification = txtCH16.Text;
+                    break;
+                default:
+                    break;
+            }
+
             testUpload.videoTitle = "Test 456";
             testUpload.videoSource = thisFile;
 
@@ -98,14 +158,9 @@ namespace Haunted_House_Video_Converter
 
             testUpload.upload();
 
-
-            // Now that we know that the video is all done, lets keep track of the fact it was done
-
-
-
         }
 
-
+        // https://msdn.microsoft.com/en-us/library/ms171728(v=vs.110).aspx
         private void updateProgressBar(int percentComplete)
         {
 

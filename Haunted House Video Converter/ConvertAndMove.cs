@@ -68,12 +68,48 @@ namespace Haunted_House_Video_Converter
 
         public bool hasInitialized = false;
 
+        /// <summary>
+        ///   Get the string "CH01 - 09-31-16 PM - Thursday.avi"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+
         private string getFileName(string path)
         {
             return path.Split('\\').Last();
         }
 
+        /// <summary>
+        ///   Get the string "CH01 - 09-31-16 PM - Thursday"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getVideoTitle(string path)
+        {
+            // Remove the directory path
+            string fullFileName = getFileName(path);
 
+            // Remove the .avi
+            return fullFileName.Substring(0, fullFileName.Length - 4); ;
+
+        }
+
+        /// <summary>
+        ///   Get the string "CH01"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getChannelId(string path)
+        {
+            return path.Split('\\').Last().Split('-').First().Trim();
+        }
+
+        /// <summary>
+        ///   Get the string "09-31-16 PM - Thursday"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getDateTime(string path)
+        {
+            string fullDateTime = getVideoTitle(path);
+            return path.Substring(6, fullDateTime.Length);
+        }
 
         /// <summary>
         /// This will create 16 folders with names of "CH01", "CH02", etc

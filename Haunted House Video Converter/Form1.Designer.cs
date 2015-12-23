@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtCH1 = new System.Windows.Forms.TextBox();
+            this.txtCH01 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtCH3 = new System.Windows.Forms.TextBox();
+            this.txtCH03 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtCH4 = new System.Windows.Forms.TextBox();
-            this.txtCH2 = new System.Windows.Forms.TextBox();
+            this.txtCH04 = new System.Windows.Forms.TextBox();
+            this.txtCH02 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtCH8 = new System.Windows.Forms.TextBox();
+            this.txtCH08 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtCH7 = new System.Windows.Forms.TextBox();
+            this.txtCH07 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtCH6 = new System.Windows.Forms.TextBox();
+            this.txtCH06 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtCH5 = new System.Windows.Forms.TextBox();
+            this.txtCH05 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtCH12 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtCH10 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtCH9 = new System.Windows.Forms.TextBox();
+            this.txtCH09 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.txtCH16 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -73,12 +73,12 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtCH1
+            // txtCH01
             // 
-            this.txtCH1.Location = new System.Drawing.Point(9, 41);
-            this.txtCH1.Name = "txtCH1";
-            this.txtCH1.Size = new System.Drawing.Size(114, 20);
-            this.txtCH1.TabIndex = 0;
+            this.txtCH01.Location = new System.Drawing.Point(9, 41);
+            this.txtCH01.Name = "txtCH01";
+            this.txtCH01.Size = new System.Drawing.Size(114, 20);
+            this.txtCH01.TabIndex = 0;
             // 
             // label1
             // 
@@ -89,12 +89,12 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Channel 1 Room Name";
             // 
-            // txtCH3
+            // txtCH03
             // 
-            this.txtCH3.Location = new System.Drawing.Point(255, 42);
-            this.txtCH3.Name = "txtCH3";
-            this.txtCH3.Size = new System.Drawing.Size(114, 20);
-            this.txtCH3.TabIndex = 4;
+            this.txtCH03.Location = new System.Drawing.Point(255, 42);
+            this.txtCH03.Name = "txtCH03";
+            this.txtCH03.Size = new System.Drawing.Size(114, 20);
+            this.txtCH03.TabIndex = 4;
             // 
             // label4
             // 
@@ -105,19 +105,19 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Channel 4 Room Name";
             // 
-            // txtCH4
+            // txtCH04
             // 
-            this.txtCH4.Location = new System.Drawing.Point(378, 42);
-            this.txtCH4.Name = "txtCH4";
-            this.txtCH4.Size = new System.Drawing.Size(114, 20);
-            this.txtCH4.TabIndex = 6;
+            this.txtCH04.Location = new System.Drawing.Point(378, 42);
+            this.txtCH04.Name = "txtCH04";
+            this.txtCH04.Size = new System.Drawing.Size(114, 20);
+            this.txtCH04.TabIndex = 6;
             // 
-            // txtCH2
+            // txtCH02
             // 
-            this.txtCH2.Location = new System.Drawing.Point(132, 41);
-            this.txtCH2.Name = "txtCH2";
-            this.txtCH2.Size = new System.Drawing.Size(114, 20);
-            this.txtCH2.TabIndex = 2;
+            this.txtCH02.Location = new System.Drawing.Point(132, 41);
+            this.txtCH02.Name = "txtCH02";
+            this.txtCH02.Size = new System.Drawing.Size(114, 20);
+            this.txtCH02.TabIndex = 2;
             // 
             // label2
             // 
@@ -146,12 +146,12 @@
             this.label5.TabIndex = 15;
             this.label5.Text = "Channel 8 Room Name";
             // 
-            // txtCH8
+            // txtCH08
             // 
-            this.txtCH8.Location = new System.Drawing.Point(378, 91);
-            this.txtCH8.Name = "txtCH8";
-            this.txtCH8.Size = new System.Drawing.Size(114, 20);
-            this.txtCH8.TabIndex = 14;
+            this.txtCH08.Location = new System.Drawing.Point(378, 91);
+            this.txtCH08.Name = "txtCH08";
+            this.txtCH08.Size = new System.Drawing.Size(114, 20);
+            this.txtCH08.TabIndex = 14;
             // 
             // label6
             // 
@@ -162,12 +162,12 @@
             this.label6.TabIndex = 13;
             this.label6.Text = "Channel 7 Room Name";
             // 
-            // txtCH7
+            // txtCH07
             // 
-            this.txtCH7.Location = new System.Drawing.Point(255, 91);
-            this.txtCH7.Name = "txtCH7";
-            this.txtCH7.Size = new System.Drawing.Size(114, 20);
-            this.txtCH7.TabIndex = 12;
+            this.txtCH07.Location = new System.Drawing.Point(255, 91);
+            this.txtCH07.Name = "txtCH07";
+            this.txtCH07.Size = new System.Drawing.Size(114, 20);
+            this.txtCH07.TabIndex = 12;
             // 
             // label7
             // 
@@ -178,12 +178,12 @@
             this.label7.TabIndex = 11;
             this.label7.Text = "Channel 6 Room Name";
             // 
-            // txtCH6
+            // txtCH06
             // 
-            this.txtCH6.Location = new System.Drawing.Point(132, 90);
-            this.txtCH6.Name = "txtCH6";
-            this.txtCH6.Size = new System.Drawing.Size(114, 20);
-            this.txtCH6.TabIndex = 10;
+            this.txtCH06.Location = new System.Drawing.Point(132, 90);
+            this.txtCH06.Name = "txtCH06";
+            this.txtCH06.Size = new System.Drawing.Size(114, 20);
+            this.txtCH06.TabIndex = 10;
             // 
             // label8
             // 
@@ -194,12 +194,12 @@
             this.label8.TabIndex = 9;
             this.label8.Text = "Channel 5 Room Name";
             // 
-            // txtCH5
+            // txtCH05
             // 
-            this.txtCH5.Location = new System.Drawing.Point(9, 90);
-            this.txtCH5.Name = "txtCH5";
-            this.txtCH5.Size = new System.Drawing.Size(114, 20);
-            this.txtCH5.TabIndex = 8;
+            this.txtCH05.Location = new System.Drawing.Point(9, 90);
+            this.txtCH05.Name = "txtCH05";
+            this.txtCH05.Size = new System.Drawing.Size(114, 20);
+            this.txtCH05.TabIndex = 8;
             // 
             // label9
             // 
@@ -258,12 +258,12 @@
             this.label12.TabIndex = 17;
             this.label12.Text = "Channel 9 Room Name";
             // 
-            // txtCH9
+            // txtCH09
             // 
-            this.txtCH9.Location = new System.Drawing.Point(9, 140);
-            this.txtCH9.Name = "txtCH9";
-            this.txtCH9.Size = new System.Drawing.Size(114, 20);
-            this.txtCH9.TabIndex = 16;
+            this.txtCH09.Location = new System.Drawing.Point(9, 140);
+            this.txtCH09.Name = "txtCH09";
+            this.txtCH09.Size = new System.Drawing.Size(114, 20);
+            this.txtCH09.TabIndex = 16;
             // 
             // label13
             // 
@@ -381,30 +381,30 @@
             this.groupBox1.Controls.Add(this.pgb_UploadStatus);
             this.groupBox1.Controls.Add(this.btnUploadToYouTube);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtCH1);
-            this.groupBox1.Controls.Add(this.txtCH2);
+            this.groupBox1.Controls.Add(this.txtCH01);
+            this.groupBox1.Controls.Add(this.txtCH02);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtCH3);
+            this.groupBox1.Controls.Add(this.txtCH03);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtCH4);
+            this.groupBox1.Controls.Add(this.txtCH04);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.txtCH5);
+            this.groupBox1.Controls.Add(this.txtCH05);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txtCH16);
-            this.groupBox1.Controls.Add(this.txtCH6);
+            this.groupBox1.Controls.Add(this.txtCH06);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtCH15);
-            this.groupBox1.Controls.Add(this.txtCH7);
+            this.groupBox1.Controls.Add(this.txtCH07);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.txtCH14);
-            this.groupBox1.Controls.Add(this.txtCH8);
+            this.groupBox1.Controls.Add(this.txtCH08);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txtCH13);
-            this.groupBox1.Controls.Add(this.txtCH9);
+            this.groupBox1.Controls.Add(this.txtCH09);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.txtCH12);
@@ -468,22 +468,22 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtCH1;
+        private System.Windows.Forms.TextBox txtCH01;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtCH3;
+        private System.Windows.Forms.TextBox txtCH03;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtCH4;
-        private System.Windows.Forms.TextBox txtCH2;
+        private System.Windows.Forms.TextBox txtCH04;
+        private System.Windows.Forms.TextBox txtCH02;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtCH8;
+        private System.Windows.Forms.TextBox txtCH08;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtCH7;
+        private System.Windows.Forms.TextBox txtCH07;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtCH6;
+        private System.Windows.Forms.TextBox txtCH06;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtCH5;
+        private System.Windows.Forms.TextBox txtCH05;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtCH12;
         private System.Windows.Forms.Label label10;
@@ -491,7 +491,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtCH10;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtCH9;
+        private System.Windows.Forms.TextBox txtCH09;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtCH16;
         private System.Windows.Forms.Label label14;
