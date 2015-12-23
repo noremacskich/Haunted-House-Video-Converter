@@ -30,6 +30,8 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace Haunted_House_Video_Converter
 {
+    public delegate void FileUploadUpdate(int uploadedBytesSum);
+
     /// <summary>
     /// YouTube Data API v3 sample: upload a video.
     /// Relies on the Google APIs Client Library for .NET, v1.7.0 or higher.
@@ -38,6 +40,11 @@ namespace Haunted_House_Video_Converter
     internal class UploadVideo
     {
 
+        public event FileUploadUpdate videoUpdate;
+
+        private long sumOfUploadedBytes { get; set; }
+
+        public long totalNumberOfBytes { get; set; }
 
         public string videoTitle{ get; set; }
 
@@ -118,6 +125,18 @@ namespace Haunted_House_Video_Converter
             {
                 case UploadStatus.Uploading:
                     Console.WriteLine("{0} bytes sent.", progress.BytesSent);
+
+                    // Get the sum of all the bytes
+                    sumOfUploadedBytes += progress.BytesSent;
+
+                    int percentComplete = (int)(((double)sumOfUploadedBytes / (double)totalNumberOfBytes)*100);
+
+                    if (percentComplete > 100) percentComplete = 100;
+
+                    // Update the UI while we are at it.
+                    videoUpdate(percentComplete);
+
+
                     break;
 
                 case UploadStatus.Failed:

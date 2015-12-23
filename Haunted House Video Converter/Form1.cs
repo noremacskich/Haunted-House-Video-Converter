@@ -16,7 +16,7 @@ namespace Haunted_House_Video_Converter
     public partial class Form1 : Form
     {
         private ConvertAndMove preppingFilesForUpload = new ConvertAndMove();
-
+        private UploadVideo testUpload = new UploadVideo();
 
         public Form1()
         {
@@ -30,6 +30,8 @@ namespace Haunted_House_Video_Converter
 
             // This is needed to make sure that the first popup will properly exit out of the whole application.
             preppingFilesForUpload.hasInitialized = true;
+
+            testUpload.videoUpdate += updateProgressBar;
         }
 
         private void getSourceFolderPath()
@@ -78,14 +80,46 @@ namespace Haunted_House_Video_Converter
 
         private void btnUploadToYouTube_Click(object sender, EventArgs e)
         {
-            UploadVideo testUpload = new UploadVideo();
 
             // For now, just wanting to see if the uploading will actually work.
             // Need to work on getting the list of files uploaded already
+
+            string thisFile = preppingFilesForUpload.lstFilesToUpload.First();
+
             testUpload.videoTitle = "Test 456";
-            testUpload.videoSource = preppingFilesForUpload.lstFilesToUpload.First();
+            testUpload.videoSource = thisFile;
+
+            lbl_CurrentFileUpload.Text = thisFile;
+
+            FileInfo destinationAttributes = new FileInfo(thisFile);
+            testUpload.totalNumberOfBytes = destinationAttributes.Length;
+
+            pgb_UploadStatus.Maximum = 100;
 
             testUpload.upload();
+
+
+            // Now that we know that the video is all done, lets keep track of the fact it was done
+
+
+
         }
+
+
+        private void updateProgressBar(int percentComplete)
+        {
+
+            if (this.pgb_UploadStatus.InvokeRequired)
+            {
+                FileUploadUpdate d = new FileUploadUpdate(updateProgressBar);
+                this.Invoke(d, new object[] { percentComplete });
+            }
+            else
+            {
+                this.pgb_UploadStatus.Value = percentComplete;
+            }
+
+        }
+
     }
 }
