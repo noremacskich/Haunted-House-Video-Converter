@@ -67,9 +67,9 @@
             this.btnBrowserDialog = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnUploadToYouTube = new System.Windows.Forms.Button();
-            this.pgb_UploadStatus = new System.Windows.Forms.ProgressBar();
             this.lbl_CurrentFileUpload = new System.Windows.Forms.Label();
+            this.pgb_UploadStatus = new System.Windows.Forms.ProgressBar();
+            this.btnUploadToYouTube = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +79,7 @@
             this.txtCH01.Name = "txtCH01";
             this.txtCH01.Size = new System.Drawing.Size(114, 20);
             this.txtCH01.TabIndex = 0;
+            this.txtCH01.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label1
             // 
@@ -94,7 +95,8 @@
             this.txtCH03.Location = new System.Drawing.Point(255, 42);
             this.txtCH03.Name = "txtCH03";
             this.txtCH03.Size = new System.Drawing.Size(114, 20);
-            this.txtCH03.TabIndex = 4;
+            this.txtCH03.TabIndex = 2;
+            this.txtCH03.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label4
             // 
@@ -110,14 +112,16 @@
             this.txtCH04.Location = new System.Drawing.Point(378, 42);
             this.txtCH04.Name = "txtCH04";
             this.txtCH04.Size = new System.Drawing.Size(114, 20);
-            this.txtCH04.TabIndex = 6;
+            this.txtCH04.TabIndex = 3;
+            this.txtCH04.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // txtCH02
             // 
             this.txtCH02.Location = new System.Drawing.Point(132, 41);
             this.txtCH02.Name = "txtCH02";
             this.txtCH02.Size = new System.Drawing.Size(114, 20);
-            this.txtCH02.TabIndex = 2;
+            this.txtCH02.TabIndex = 1;
+            this.txtCH02.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label2
             // 
@@ -151,7 +155,8 @@
             this.txtCH08.Location = new System.Drawing.Point(378, 91);
             this.txtCH08.Name = "txtCH08";
             this.txtCH08.Size = new System.Drawing.Size(114, 20);
-            this.txtCH08.TabIndex = 14;
+            this.txtCH08.TabIndex = 7;
+            this.txtCH08.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label6
             // 
@@ -167,7 +172,8 @@
             this.txtCH07.Location = new System.Drawing.Point(255, 91);
             this.txtCH07.Name = "txtCH07";
             this.txtCH07.Size = new System.Drawing.Size(114, 20);
-            this.txtCH07.TabIndex = 12;
+            this.txtCH07.TabIndex = 6;
+            this.txtCH07.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label7
             // 
@@ -183,7 +189,8 @@
             this.txtCH06.Location = new System.Drawing.Point(132, 90);
             this.txtCH06.Name = "txtCH06";
             this.txtCH06.Size = new System.Drawing.Size(114, 20);
-            this.txtCH06.TabIndex = 10;
+            this.txtCH06.TabIndex = 5;
+            this.txtCH06.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label8
             // 
@@ -199,7 +206,8 @@
             this.txtCH05.Location = new System.Drawing.Point(9, 90);
             this.txtCH05.Name = "txtCH05";
             this.txtCH05.Size = new System.Drawing.Size(114, 20);
-            this.txtCH05.TabIndex = 8;
+            this.txtCH05.TabIndex = 4;
+            this.txtCH05.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label9
             // 
@@ -215,7 +223,8 @@
             this.txtCH12.Location = new System.Drawing.Point(378, 141);
             this.txtCH12.Name = "txtCH12";
             this.txtCH12.Size = new System.Drawing.Size(114, 20);
-            this.txtCH12.TabIndex = 22;
+            this.txtCH12.TabIndex = 11;
+            this.txtCH12.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label10
             // 
@@ -231,7 +240,8 @@
             this.txtCH11.Location = new System.Drawing.Point(255, 141);
             this.txtCH11.Name = "txtCH11";
             this.txtCH11.Size = new System.Drawing.Size(114, 20);
-            this.txtCH11.TabIndex = 20;
+            this.txtCH11.TabIndex = 10;
+            this.txtCH11.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label11
             // 
@@ -247,7 +257,8 @@
             this.txtCH10.Location = new System.Drawing.Point(132, 140);
             this.txtCH10.Name = "txtCH10";
             this.txtCH10.Size = new System.Drawing.Size(114, 20);
-            this.txtCH10.TabIndex = 18;
+            this.txtCH10.TabIndex = 9;
+            this.txtCH10.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label12
             // 
@@ -263,7 +274,8 @@
             this.txtCH09.Location = new System.Drawing.Point(9, 140);
             this.txtCH09.Name = "txtCH09";
             this.txtCH09.Size = new System.Drawing.Size(114, 20);
-            this.txtCH09.TabIndex = 16;
+            this.txtCH09.TabIndex = 8;
+            this.txtCH09.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label13
             // 
@@ -279,7 +291,8 @@
             this.txtCH16.Location = new System.Drawing.Point(378, 193);
             this.txtCH16.Name = "txtCH16";
             this.txtCH16.Size = new System.Drawing.Size(114, 20);
-            this.txtCH16.TabIndex = 30;
+            this.txtCH16.TabIndex = 15;
+            this.txtCH16.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label14
             // 
@@ -295,7 +308,8 @@
             this.txtCH15.Location = new System.Drawing.Point(255, 193);
             this.txtCH15.Name = "txtCH15";
             this.txtCH15.Size = new System.Drawing.Size(114, 20);
-            this.txtCH15.TabIndex = 28;
+            this.txtCH15.TabIndex = 14;
+            this.txtCH15.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label15
             // 
@@ -311,7 +325,8 @@
             this.txtCH14.Location = new System.Drawing.Point(132, 192);
             this.txtCH14.Name = "txtCH14";
             this.txtCH14.Size = new System.Drawing.Size(114, 20);
-            this.txtCH14.TabIndex = 26;
+            this.txtCH14.TabIndex = 13;
+            this.txtCH14.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label16
             // 
@@ -327,7 +342,8 @@
             this.txtCH13.Location = new System.Drawing.Point(9, 192);
             this.txtCH13.Name = "txtCH13";
             this.txtCH13.Size = new System.Drawing.Size(114, 20);
-            this.txtCH13.TabIndex = 24;
+            this.txtCH13.TabIndex = 12;
+            this.txtCH13.TextChanged += new System.EventHandler(this.txt_TextUpdate);
             // 
             // label17
             // 
@@ -419,15 +435,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Youtube Upload Section";
             // 
-            // btnUploadToYouTube
+            // lbl_CurrentFileUpload
             // 
-            this.btnUploadToYouTube.Location = new System.Drawing.Point(9, 243);
-            this.btnUploadToYouTube.Name = "btnUploadToYouTube";
-            this.btnUploadToYouTube.Size = new System.Drawing.Size(160, 23);
-            this.btnUploadToYouTube.TabIndex = 32;
-            this.btnUploadToYouTube.Text = "Uploaded Files to Youtube";
-            this.btnUploadToYouTube.UseVisualStyleBackColor = true;
-            this.btnUploadToYouTube.Click += new System.EventHandler(this.btnUploadToYouTube_Click);
+            this.lbl_CurrentFileUpload.AutoSize = true;
+            this.lbl_CurrentFileUpload.Location = new System.Drawing.Point(9, 281);
+            this.lbl_CurrentFileUpload.Name = "lbl_CurrentFileUpload";
+            this.lbl_CurrentFileUpload.Size = new System.Drawing.Size(41, 13);
+            this.lbl_CurrentFileUpload.TabIndex = 34;
+            this.lbl_CurrentFileUpload.Text = "label18";
             // 
             // pgb_UploadStatus
             // 
@@ -437,14 +452,15 @@
             this.pgb_UploadStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.pgb_UploadStatus.TabIndex = 33;
             // 
-            // lbl_CurrentFileUpload
+            // btnUploadToYouTube
             // 
-            this.lbl_CurrentFileUpload.AutoSize = true;
-            this.lbl_CurrentFileUpload.Location = new System.Drawing.Point(9, 281);
-            this.lbl_CurrentFileUpload.Name = "lbl_CurrentFileUpload";
-            this.lbl_CurrentFileUpload.Size = new System.Drawing.Size(41, 13);
-            this.lbl_CurrentFileUpload.TabIndex = 34;
-            this.lbl_CurrentFileUpload.Text = "label18";
+            this.btnUploadToYouTube.Location = new System.Drawing.Point(9, 243);
+            this.btnUploadToYouTube.Name = "btnUploadToYouTube";
+            this.btnUploadToYouTube.Size = new System.Drawing.Size(160, 23);
+            this.btnUploadToYouTube.TabIndex = 32;
+            this.btnUploadToYouTube.Text = "Uploaded Files to Youtube";
+            this.btnUploadToYouTube.UseVisualStyleBackColor = true;
+            this.btnUploadToYouTube.Click += new System.EventHandler(this.btnUploadToYouTube_Click);
             // 
             // Form1
             // 

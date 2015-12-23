@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-
+using Haunted_House_Video_Converter.Properties;
 
 namespace Haunted_House_Video_Converter
 {
     class ConvertAndMove
     {
+        Settings set = Settings.Default;
 
         List<string> originalFileNames = new List<string>();
 
@@ -62,6 +63,8 @@ namespace Haunted_House_Video_Converter
             {
                 // Stub, need to figure out way of figuring out which ones have been uploaded already.
                 // Most likely a text file of some sort keeping track of that.
+                //List<string> convertedV
+
                 return Directory.EnumerateFiles(pathToConvertedVideos, "*.avi", SearchOption.AllDirectories).ToList();
             }
        }

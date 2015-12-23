@@ -10,13 +10,21 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Haunted_House_Video_Converter.Properties;
 
 namespace Haunted_House_Video_Converter
 {
+
     public partial class Form1 : Form
     {
         private ConvertAndMove preppingFilesForUpload = new ConvertAndMove();
         private UploadVideo testUpload = new UploadVideo();
+
+        Settings set = Settings.Default;
+
+        /// <summary>This array holds the values from the textboxes</summary>
+
+
 
         public Form1()
         {
@@ -31,7 +39,42 @@ namespace Haunted_House_Video_Converter
             // This is needed to make sure that the first popup will properly exit out of the whole application.
             preppingFilesForUpload.hasInitialized = true;
 
+            // Update the progress bar
             testUpload.videoUpdate += updateProgressBar;
+
+            // If this is the first time running this, then initialize the channel names
+            if(set.ChannelNames == null) { 
+                set.ChannelNames = new System.Collections.Specialized.StringCollection();
+
+                // If there are no ChannelNames yet, lets set the default of "CH##"
+                for (int i = 1; i<=16; i++)
+                {
+                    set.ChannelNames.Add("CH" + i.ToString("D2"));
+                }
+            }
+
+            // Also check to make sure that the Uploaded videos are intialized as well
+            if (set.UploadedVideos == null) set.UploadedVideos = new System.Collections.Specialized.StringCollection();
+
+
+            // Give all the textboxes their values
+            txtCH01.Text = set.ChannelNames[0];
+            txtCH02.Text = set.ChannelNames[1];
+            txtCH03.Text = set.ChannelNames[2];
+            txtCH04.Text = set.ChannelNames[3];
+            txtCH05.Text = set.ChannelNames[4];
+            txtCH06.Text = set.ChannelNames[5];
+            txtCH07.Text = set.ChannelNames[6];
+            txtCH08.Text = set.ChannelNames[7];
+            txtCH09.Text = set.ChannelNames[8];
+            txtCH10.Text = set.ChannelNames[9];
+            txtCH11.Text = set.ChannelNames[10];
+            txtCH12.Text = set.ChannelNames[11];
+            txtCH13.Text = set.ChannelNames[12];
+            txtCH14.Text = set.ChannelNames[13];
+            txtCH15.Text = set.ChannelNames[14];
+            txtCH16.Text = set.ChannelNames[15];
+
         }
 
         private void getSourceFolderPath()
@@ -80,7 +123,7 @@ namespace Haunted_House_Video_Converter
 
         private void btnUploadToYouTube_Click(object sender, EventArgs e)
         {
-
+            setTextBoxesEnabled(false);
             // For now, just wanting to see if the uploading will actually work.
             // Need to work on getting the list of files uploaded already
 
@@ -90,63 +133,11 @@ namespace Haunted_House_Video_Converter
 
             string videoTitle = preppingFilesForUpload.getVideoTitle(thisFile);
 
-            string RoomIdentification;
+            string videoDate = preppingFilesForUpload.getDateTime(thisFile);
 
-            switch (channelID)
-            {
-                case "CH01" :
-                    RoomIdentification = txtCH01.Text;
-                    break;
-                case "CH02":
-                    RoomIdentification = txtCH02.Text;
-                    break;
-                case "CH03":
-                    RoomIdentification = txtCH03.Text;
-                    break;
-                case "CH04":
-                    RoomIdentification = txtCH04.Text;
-                    break;
-                case "CH05":
-                    RoomIdentification = txtCH05.Text;
-                    break;
-                case "CH06":
-                    RoomIdentification = txtCH06.Text;
-                    break;
-                case "CH07":
-                    RoomIdentification = txtCH07.Text;
-                    break;
-                case "CH08":
-                    RoomIdentification = txtCH08.Text;
-                    break;
-                case "CH09":
-                    RoomIdentification = txtCH09.Text;
-                    break;
-                case "CH10":
-                    RoomIdentification = txtCH10.Text;
-                    break;
-                case "CH11":
-                    RoomIdentification = txtCH11.Text;
-                    break;
-                case "CH12":
-                    RoomIdentification = txtCH12.Text;
-                    break;
-                case "CH13":
-                    RoomIdentification = txtCH13.Text;
-                    break;
-                case "CH14":
-                    RoomIdentification = txtCH14.Text;
-                    break;
-                case "CH15":
-                    RoomIdentification = txtCH15.Text;
-                    break;
-                case "CH16":
-                    RoomIdentification = txtCH16.Text;
-                    break;
-                default:
-                    break;
-            }
-
-            testUpload.videoTitle = "Test 456";
+            int channelNumber = Int32.Parse(channelID.Substring(1, 3));
+            
+            testUpload.videoTitle = set.ChannelNames[channelNumber-1] + " - " + videoDate;
             testUpload.videoSource = thisFile;
 
             lbl_CurrentFileUpload.Text = thisFile;
@@ -158,6 +149,31 @@ namespace Haunted_House_Video_Converter
 
             testUpload.upload();
 
+            // Be sure to denote that the video was successfully uploaded.
+            set.UploadedVideos.Add(thisFile);
+            set.Save();
+
+            setTextBoxesEnabled(true);
+        }
+
+        private void setTextBoxesEnabled(bool enableState)
+        {
+            txtCH01.Enabled = enableState;
+            txtCH02.Enabled = enableState;
+            txtCH03.Enabled = enableState;
+            txtCH04.Enabled = enableState;
+            txtCH05.Enabled = enableState;
+            txtCH06.Enabled = enableState;
+            txtCH07.Enabled = enableState;
+            txtCH08.Enabled = enableState;
+            txtCH09.Enabled = enableState;
+            txtCH10.Enabled = enableState;
+            txtCH11.Enabled = enableState;
+            txtCH12.Enabled = enableState;
+            txtCH13.Enabled = enableState;
+            txtCH14.Enabled = enableState;
+            txtCH15.Enabled = enableState;
+            txtCH16.Enabled = enableState;
         }
 
         // https://msdn.microsoft.com/en-us/library/ms171728(v=vs.110).aspx
@@ -176,5 +192,15 @@ namespace Haunted_House_Video_Converter
 
         }
 
+        /// <summary>
+        /// This relies on the tab order to be set with 0 being channel's 1 textbox.
+        /// </summary>
+        private void txt_TextUpdate(object sender, EventArgs e)
+        {
+            TextBox thisText = (TextBox)sender;
+
+            set.ChannelNames[thisText.TabIndex] = thisText.Text;
+            set.Save();
+        }
     }
 }
