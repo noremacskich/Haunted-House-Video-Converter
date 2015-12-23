@@ -31,7 +31,7 @@ using Google.Apis.YouTube.v3.Data;
 namespace Haunted_House_Video_Converter
 {
     public delegate void FileUploadUpdate(int uploadedBytesSum);
-
+    public delegate void FileUploadFailure(string reason);
     /// <summary>
     /// YouTube Data API v3 sample: upload a video.
     /// Relies on the Google APIs Client Library for .NET, v1.7.0 or higher.
@@ -41,6 +41,7 @@ namespace Haunted_House_Video_Converter
     {
 
         public event FileUploadUpdate videoUpdate;
+        public event FileUploadFailure uploadFailure;
 
         private long sumOfUploadedBytes { get; set; }
 
@@ -141,6 +142,7 @@ namespace Haunted_House_Video_Converter
 
                 case UploadStatus.Failed:
                     Console.WriteLine("An error prevented the upload from completing.\n{0}", progress.Exception);
+                    uploadFailure(progress.Exception);
                     break;
             }
         }

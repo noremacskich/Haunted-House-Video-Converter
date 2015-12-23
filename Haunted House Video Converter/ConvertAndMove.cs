@@ -135,7 +135,7 @@ namespace Haunted_House_Video_Converter
         public string getDateTime(string path)
         {
             string fullDateTime = getVideoTitle(path);
-            return path.Substring(6, fullDateTime.Length);
+            return fullDateTime.Substring(7);
         }
 
         /// <summary>

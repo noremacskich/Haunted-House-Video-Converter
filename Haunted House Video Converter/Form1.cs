@@ -42,8 +42,14 @@ namespace Haunted_House_Video_Converter
             // Update the progress bar
             testUpload.videoUpdate += updateProgressBar;
 
+            testUpload.uploadFailure += uploadFailure;
+
+            // set max on progress bar
+            pgb_UploadStatus.Maximum = 100;
+
+
             // If this is the first time running this, then initialize the channel names
-            if(set.ChannelNames == null) { 
+            if (set.ChannelNames == null) { 
                 set.ChannelNames = new System.Collections.Specialized.StringCollection();
 
                 // If there are no ChannelNames yet, lets set the default of "CH##"
@@ -55,7 +61,7 @@ namespace Haunted_House_Video_Converter
 
             // Also check to make sure that the Uploaded videos are intialized as well
             if (set.UploadedVideos == null) set.UploadedVideos = new System.Collections.Specialized.StringCollection();
-
+            if (set.UploadedVideoNames == null) set.UploadedVideoNames = new System.Collections.Specialized.StringCollection();
 
             // Give all the textboxes their values
             txtCH01.Text = set.ChannelNames[0];
@@ -127,33 +133,42 @@ namespace Haunted_House_Video_Converter
             // For now, just wanting to see if the uploading will actually work.
             // Need to work on getting the list of files uploaded already
 
-            string thisFile = preppingFilesForUpload.lstFilesToUpload.First();
 
-            string channelID = preppingFilesForUpload.getChannelId(thisFile);
+            foreach(string thisFile in preppingFilesForUpload.lstFilesToUpload)
+            {
+                // Reset the progress bar
+                updateProgressBar(0);
 
-            string videoTitle = preppingFilesForUpload.getVideoTitle(thisFile);
+                string channelID = preppingFilesForUpload.getChannelId(thisFile);
 
-            string videoDate = preppingFilesForUpload.getDateTime(thisFile);
+                string videoTitle = preppingFilesForUpload.getVideoTitle(thisFile);
 
-            int channelNumber = Int32.Parse(channelID.Substring(1, 3));
-            
-            testUpload.videoTitle = set.ChannelNames[channelNumber-1] + " - " + videoDate;
-            testUpload.videoSource = thisFile;
+                string videoDate = preppingFilesForUpload.getDateTime(thisFile);
 
-            lbl_CurrentFileUpload.Text = thisFile;
+                string numbersFromString = new String(channelID.Where(x => x >= '0' && x <= '9').ToArray());
+                int channelNumber = Int32.Parse(numbersFromString);
 
-            FileInfo destinationAttributes = new FileInfo(thisFile);
-            testUpload.totalNumberOfBytes = destinationAttributes.Length;
+                testUpload.videoTitle = set.ChannelNames[channelNumber-1] + " - " + videoDate;
+                testUpload.videoSource = thisFile;
 
-            pgb_UploadStatus.Maximum = 100;
+                lbl_CurrentFileUpload.Text = thisFile;
 
-            testUpload.upload();
+                FileInfo destinationAttributes = new FileInfo(thisFile);
+                testUpload.totalNumberOfBytes = destinationAttributes.Length;
 
-            // Be sure to denote that the video was successfully uploaded.
-            set.UploadedVideos.Add(thisFile);
-            set.Save();
+
+                testUpload.upload();
+
+                // Be sure to denote that the video was successfully uploaded, as well as the upload name, we will be needing those
+                // later to make sure that we get the videos into the right playlist
+                set.UploadedVideos.Add(thisFile);
+                set.UploadedVideoNames.Add(testUpload.videoTitle);
+                set.Save();
+
+            }
 
             setTextBoxesEnabled(true);
+
         }
 
         private void setTextBoxesEnabled(bool enableState)
@@ -190,6 +205,11 @@ namespace Haunted_House_Video_Converter
                 this.pgb_UploadStatus.Value = percentComplete;
             }
 
+        }
+
+        public void updateFailure(string reason)
+        {
+            throw new Exception("Update Failure not implemented Yet");
         }
 
         /// <summary>

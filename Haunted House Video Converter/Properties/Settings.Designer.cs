@@ -44,5 +44,16 @@ namespace Haunted_House_Video_Converter.Properties {
                 this["UploadedVideos"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection UploadedVideoNames {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["UploadedVideoNames"]));
+            }
+            set {
+                this["UploadedVideoNames"] = value;
+            }
+        }
     }
 }
