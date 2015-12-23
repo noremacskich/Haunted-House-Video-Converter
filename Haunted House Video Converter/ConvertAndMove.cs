@@ -62,7 +62,7 @@ namespace Haunted_House_Video_Converter
             {
                 // Stub, need to figure out way of figuring out which ones have been uploaded already.
                 // Most likely a text file of some sort keeping track of that.
-                return Directory.EnumerateFiles(pathToSortedVideos, "*.avi", SearchOption.AllDirectories).ToList();
+                return Directory.EnumerateFiles(pathToConvertedVideos, "*.avi", SearchOption.AllDirectories).ToList();
             }
        }
 

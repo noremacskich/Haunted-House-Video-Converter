@@ -82,9 +82,10 @@ namespace Haunted_House_Video_Converter
 
             // For now, just wanting to see if the uploading will actually work.
             // Need to work on getting the list of files uploaded already
-            string testUploadFile = preppingFilesForUpload.lstFilesToUpload.First();
+            testUpload.videoTitle = "Test 456";
+            testUpload.videoSource = preppingFilesForUpload.lstFilesToUpload.First();
 
-            testUpload.TryUploadVideo(testUploadFile);
+            testUpload.upload();
         }
     }
 }
