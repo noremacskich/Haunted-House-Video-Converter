@@ -57,15 +57,39 @@ namespace Haunted_House_Video_Converter
             }
         }
 
+        public List<string> lstSortedFiles
+        {
+            get
+            {
+                return Directory.EnumerateFiles(pathToSortedVideos, "*.avi", SearchOption.TopDirectoryOnly).ToList();
+            }
+        }
+
+        public List<string> lstConvertedFiles
+        {
+            get
+            {
+                return Directory.EnumerateFiles(pathToConvertedVideos, "*.avi", SearchOption.AllDirectories).ToList();
+            }
+        }
+
+        public List<string> lstFilesToConvert
+        {
+            get
+            {
+                return lstSortedFiles.Except(lstConvertedFiles).ToList();
+            }
+        }
+
+
+        /// <summary>
+        /// Returns the list of strings that have yet to be uploaded to youtube.
+        /// </summary>
         public List<string> lstFilesToUpload
         {
             get
             {
-                // Stub, need to figure out way of figuring out which ones have been uploaded already.
-                // Most likely a text file of some sort keeping track of that.
-                //List<string> convertedV
-
-                return Directory.EnumerateFiles(pathToConvertedVideos, "*.avi", SearchOption.AllDirectories).ToList();
+                return lstConvertedFiles.Except(set.UploadedVideos.Cast<string>().ToList()).ToList();
             }
        }
 
