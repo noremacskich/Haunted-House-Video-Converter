@@ -27,11 +27,18 @@ using Google.Apis.Upload;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using System.Collections.Generic;
+using System.Linq;
+using Haunted_House_Video_Converter.Properties;
 
 namespace Haunted_House_Video_Converter
 {
     public delegate void FileUploadUpdate(int uploadedBytesSum);
     public delegate void FileUploadFailure(string reason);
+    public delegate void UpdateFilePath(string path);
+    public delegate void UpdateOverallStatus(string numberVidsRemaining);
+    public delegate void UpdateOverallProgress(int percentComplete);
+
     /// <summary>
     /// YouTube Data API v3 sample: upload a video.
     /// Relies on the Google APIs Client Library for .NET, v1.7.0 or higher.
@@ -42,6 +49,13 @@ namespace Haunted_House_Video_Converter
 
         public event FileUploadUpdate videoUpdate;
         public event FileUploadFailure uploadFailure;
+        public event UpdateFilePath updatePath;
+        public event UpdateOverallStatus updatedOverallStatus;
+        public event UpdateOverallProgress updatedOverallProgress;
+
+
+        Settings set = Settings.Default;
+
 
         private long sumOfUploadedBytes { get; set; }
 
@@ -51,25 +65,122 @@ namespace Haunted_House_Video_Converter
 
         public string videoSource { get; set; }
 
+        public List<string> lstConvertedFiles { get; set; }
+
+        /// <summary>
+        /// Returns the list of strings that have yet to be uploaded to youtube.
+        /// </summary>
+        public List<string> lstFilesToUpload
+        {
+            get
+            {
+                return lstConvertedFiles.Except(set.UploadedVideos.Cast<string>().ToList()).ToList();
+            }
+        }
+
+        /// <summary>
+        ///   Get the string "CH01 - 09-31-16 PM - Thursday.avi"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+
+        private string getFileName(string path)
+        {
+            return path.Split('\\').Last();
+        }
+
+        /// <summary>
+        ///   Get the string "CH01 - 09-31-16 PM - Thursday"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getVideoTitle(string path)
+        {
+            // Remove the directory path
+            string fullFileName = getFileName(path);
+
+            // Remove the .avi
+            return fullFileName.Substring(0, fullFileName.Length - 4); ;
+
+        }
+
+        /// <summary>
+        ///   Get the string "CH01"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getChannelId(string path)
+        {
+            return path.Split('\\').Last().Split('-').First().Trim();
+        }
+
+        /// <summary>
+        ///   Get the string "09-31-16 PM - Thursday"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getDateTime(string path)
+        {
+            string fullDateTime = getVideoTitle(path);
+            return fullDateTime.Substring(7);
+        }
+
+
+
         [STAThread]
         public async void upload()
         {
 
+            int totalNumberToUpload = lstFilesToUpload.Count();
+            int totalUploaded = set.UploadedVideos.Count;
+
+            foreach (string thisFile in lstFilesToUpload)
+            {
+                // Reset the progress bar
+                videoUpdate(0);
+
+                string channelID = getChannelId(thisFile);
+
+                string videoDate = getDateTime(thisFile);
+
+                string numbersFromString = new String(channelID.Where(x => x >= '0' && x <= '9').ToArray());
+                int channelNumber = Int32.Parse(numbersFromString);
+
+                videoTitle = set.ChannelNames[channelNumber - 1] + " - " + videoDate;
+                videoSource = thisFile;
+
+                updatePath(thisFile);
+
+                FileInfo destinationAttributes = new FileInfo(thisFile);
+                totalNumberOfBytes = destinationAttributes.Length;
+
+
+                int percentComplete = totalUploaded / totalNumberToUpload;
+
+                updatedOverallStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
+                updatedOverallProgress(percentComplete);
+
+
+                try
+                {
+                    await Run();
+                }
+                catch (AggregateException ex)
+                {
+                    foreach (var e in ex.InnerExceptions)
+                    {
+                        Console.WriteLine("Error: " + e.Message);
+                    }
+                }
+
+
+                // Be sure to denote that the video was successfully uploaded, as well as the upload name, we will be needing those
+                // later to make sure that we get the videos into the right playlist
+                set.UploadedVideos.Add(thisFile);
+                set.UploadedVideoNames.Add(videoTitle);
+                set.Save();
+
+            }
 
             Console.WriteLine("YouTube Data API: Upload Video");
             Console.WriteLine("==============================");
 
-            try
-            {
-                await Run();
-            }
-            catch (AggregateException ex)
-            {
-                foreach (var e in ex.InnerExceptions)
-                {
-                    Console.WriteLine("Error: " + e.Message);
-                }
-            }
 
             Console.WriteLine("Press any key to continue...");
         }
@@ -142,7 +253,7 @@ namespace Haunted_House_Video_Converter
 
                 case UploadStatus.Failed:
                     Console.WriteLine("An error prevented the upload from completing.\n{0}", progress.Exception);
-                    uploadFailure(progress.Exception);
+                    uploadFailure(progress.Exception.ToString());
                     break;
             }
         }

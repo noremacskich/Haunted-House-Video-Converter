@@ -12,6 +12,10 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Haunted_House_Video_Converter.Properties;
 
+using System.Threading;
+using System.Threading.Tasks;
+
+
 namespace Haunted_House_Video_Converter
 {
 
@@ -43,7 +47,9 @@ namespace Haunted_House_Video_Converter
             testUpload.videoUpdate += updateProgressBar;
 
             testUpload.uploadFailure += uploadFailure;
-
+            testUpload.updatePath += updateCurrentPath;
+            testUpload.updatedOverallStatus += updateFilesStatus;
+            testUpload.updatedOverallProgress += UpdateOverallProgressBar;
             // set max on progress bar
             pgb_UploadStatus.Maximum = 100;
 
@@ -133,39 +139,9 @@ namespace Haunted_House_Video_Converter
             // For now, just wanting to see if the uploading will actually work.
             // Need to work on getting the list of files uploaded already
 
+            testUpload.lstConvertedFiles = preppingFilesForUpload.lstConvertedFiles;
 
-            foreach(string thisFile in preppingFilesForUpload.lstFilesToUpload)
-            {
-                // Reset the progress bar
-                updateProgressBar(0);
-
-                string channelID = preppingFilesForUpload.getChannelId(thisFile);
-
-                string videoTitle = preppingFilesForUpload.getVideoTitle(thisFile);
-
-                string videoDate = preppingFilesForUpload.getDateTime(thisFile);
-
-                string numbersFromString = new String(channelID.Where(x => x >= '0' && x <= '9').ToArray());
-                int channelNumber = Int32.Parse(numbersFromString);
-
-                testUpload.videoTitle = set.ChannelNames[channelNumber-1] + " - " + videoDate;
-                testUpload.videoSource = thisFile;
-
-                lbl_CurrentFileUpload.Text = thisFile;
-
-                FileInfo destinationAttributes = new FileInfo(thisFile);
-                testUpload.totalNumberOfBytes = destinationAttributes.Length;
-
-
-                testUpload.upload();
-
-                // Be sure to denote that the video was successfully uploaded, as well as the upload name, we will be needing those
-                // later to make sure that we get the videos into the right playlist
-                set.UploadedVideos.Add(thisFile);
-                set.UploadedVideoNames.Add(testUpload.videoTitle);
-                set.Save();
-
-            }
+            testUpload.upload();
 
             setTextBoxesEnabled(true);
 
@@ -207,9 +183,58 @@ namespace Haunted_House_Video_Converter
 
         }
 
-        public void updateFailure(string reason)
+        // https://msdn.microsoft.com/en-us/library/ms171728(v=vs.110).aspx
+        private void updateCurrentPath(string path)
         {
-            throw new Exception("Update Failure not implemented Yet");
+
+            if (this.lbl_CurrentFileUpload.InvokeRequired)
+            {
+                UpdateFilePath d = new UpdateFilePath(updateCurrentPath);
+                this.Invoke(d, new object[] { path });
+            }
+            else
+            {
+                this.lbl_CurrentFileUpload.Text = path;
+            }
+
+        }
+
+        // https://msdn.microsoft.com/en-us/library/ms171728(v=vs.110).aspx
+        private void updateFilesStatus(string path)
+        {
+
+            if (this.lblOveralProgress.InvokeRequired)
+            {
+                UpdateOverallStatus d = new UpdateOverallStatus(updateFilesStatus);
+                this.Invoke(d, new object[] { path });
+            }
+            else
+            {
+                this.lblOveralProgress.Text = path;
+            }
+
+        }
+
+        // https://msdn.microsoft.com/en-us/library/ms171728(v=vs.110).aspx
+        private void UpdateOverallProgressBar(int percentComplete)
+        {
+
+            if (this.pgbOverallPercent.InvokeRequired)
+            {
+                UpdateOverallProgress d = new UpdateOverallProgress(UpdateOverallProgressBar);
+                this.Invoke(d, new object[] { percentComplete });
+            }
+            else
+            {
+                this.pgbOverallPercent.Value = percentComplete;
+            }
+
+        }
+
+
+        public void uploadFailure(string reason)
+        {
+            MessageBox.Show("Upload a Failure for this reason:" + reason);
         }
 
         /// <summary>

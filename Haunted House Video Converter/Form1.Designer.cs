@@ -70,6 +70,8 @@
             this.lbl_CurrentFileUpload = new System.Windows.Forms.Label();
             this.pgb_UploadStatus = new System.Windows.Forms.ProgressBar();
             this.btnUploadToYouTube = new System.Windows.Forms.Button();
+            this.lblOveralProgress = new System.Windows.Forms.Label();
+            this.pgbOverallPercent = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -393,6 +395,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.pgbOverallPercent);
+            this.groupBox1.Controls.Add(this.lblOveralProgress);
             this.groupBox1.Controls.Add(this.lbl_CurrentFileUpload);
             this.groupBox1.Controls.Add(this.pgb_UploadStatus);
             this.groupBox1.Controls.Add(this.btnUploadToYouTube);
@@ -438,7 +442,7 @@
             // lbl_CurrentFileUpload
             // 
             this.lbl_CurrentFileUpload.AutoSize = true;
-            this.lbl_CurrentFileUpload.Location = new System.Drawing.Point(9, 281);
+            this.lbl_CurrentFileUpload.Location = new System.Drawing.Point(6, 326);
             this.lbl_CurrentFileUpload.Name = "lbl_CurrentFileUpload";
             this.lbl_CurrentFileUpload.Size = new System.Drawing.Size(41, 13);
             this.lbl_CurrentFileUpload.TabIndex = 34;
@@ -446,7 +450,7 @@
             // 
             // pgb_UploadStatus
             // 
-            this.pgb_UploadStatus.Location = new System.Drawing.Point(12, 297);
+            this.pgb_UploadStatus.Location = new System.Drawing.Point(9, 342);
             this.pgb_UploadStatus.Name = "pgb_UploadStatus";
             this.pgb_UploadStatus.Size = new System.Drawing.Size(322, 23);
             this.pgb_UploadStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -461,6 +465,23 @@
             this.btnUploadToYouTube.Text = "Uploaded Files to Youtube";
             this.btnUploadToYouTube.UseVisualStyleBackColor = true;
             this.btnUploadToYouTube.Click += new System.EventHandler(this.btnUploadToYouTube_Click);
+            // 
+            // lblOveralProgress
+            // 
+            this.lblOveralProgress.AutoSize = true;
+            this.lblOveralProgress.Location = new System.Drawing.Point(6, 284);
+            this.lblOveralProgress.Name = "lblOveralProgress";
+            this.lblOveralProgress.Size = new System.Drawing.Size(41, 13);
+            this.lblOveralProgress.TabIndex = 35;
+            this.lblOveralProgress.Text = "label18";
+            // 
+            // pgbOverallPercent
+            // 
+            this.pgbOverallPercent.Location = new System.Drawing.Point(9, 300);
+            this.pgbOverallPercent.Name = "pgbOverallPercent";
+            this.pgbOverallPercent.Size = new System.Drawing.Size(322, 23);
+            this.pgbOverallPercent.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pgbOverallPercent.TabIndex = 36;
             // 
             // Form1
             // 
@@ -526,6 +547,8 @@
         private System.Windows.Forms.Button btnUploadToYouTube;
         private System.Windows.Forms.ProgressBar pgb_UploadStatus;
         private System.Windows.Forms.Label lbl_CurrentFileUpload;
+        private System.Windows.Forms.Label lblOveralProgress;
+        private System.Windows.Forms.ProgressBar pgbOverallPercent;
     }
 }
 
