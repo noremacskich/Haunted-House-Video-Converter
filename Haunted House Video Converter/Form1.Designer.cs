@@ -67,12 +67,13 @@
             this.btnBrowserDialog = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnClearUploadList = new System.Windows.Forms.Button();
             this.pgbOverallPercent = new System.Windows.Forms.ProgressBar();
             this.lblOveralProgress = new System.Windows.Forms.Label();
             this.lbl_CurrentFileUpload = new System.Windows.Forms.Label();
             this.pgb_UploadStatus = new System.Windows.Forms.ProgressBar();
             this.btnUploadToYouTube = new System.Windows.Forms.Button();
-            this.btnClearUploadList = new System.Windows.Forms.Button();
+            this.btnCreatePlaylists = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -441,6 +442,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Youtube Upload Section";
             // 
+            // btnClearUploadList
+            // 
+            this.btnClearUploadList.Location = new System.Drawing.Point(9, 247);
+            this.btnClearUploadList.Name = "btnClearUploadList";
+            this.btnClearUploadList.Size = new System.Drawing.Size(160, 23);
+            this.btnClearUploadList.TabIndex = 37;
+            this.btnClearUploadList.Text = "Clear Upload List";
+            this.btnClearUploadList.UseVisualStyleBackColor = true;
+            this.btnClearUploadList.Click += new System.EventHandler(this.btnClearUploadList_Click);
+            // 
             // pgbOverallPercent
             // 
             this.pgbOverallPercent.Location = new System.Drawing.Point(9, 300);
@@ -485,21 +496,22 @@
             this.btnUploadToYouTube.UseVisualStyleBackColor = true;
             this.btnUploadToYouTube.Click += new System.EventHandler(this.btnUploadToYouTube_Click);
             // 
-            // btnClearUploadList
+            // btnCreatePlaylists
             // 
-            this.btnClearUploadList.Location = new System.Drawing.Point(9, 247);
-            this.btnClearUploadList.Name = "btnClearUploadList";
-            this.btnClearUploadList.Size = new System.Drawing.Size(160, 23);
-            this.btnClearUploadList.TabIndex = 37;
-            this.btnClearUploadList.Text = "Clear Upload List";
-            this.btnClearUploadList.UseVisualStyleBackColor = true;
-            this.btnClearUploadList.Click += new System.EventHandler(this.btnClearUploadList_Click);
+            this.btnCreatePlaylists.Location = new System.Drawing.Point(12, 138);
+            this.btnCreatePlaylists.Name = "btnCreatePlaylists";
+            this.btnCreatePlaylists.Size = new System.Drawing.Size(130, 23);
+            this.btnCreatePlaylists.TabIndex = 41;
+            this.btnCreatePlaylists.Text = "Create Playlists";
+            this.btnCreatePlaylists.UseVisualStyleBackColor = true;
+            this.btnCreatePlaylists.Click += new System.EventHandler(this.btnCreatePlaylists_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 595);
+            this.Controls.Add(this.btnCreatePlaylists);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnBrowserDialog);
@@ -562,6 +574,7 @@
         private System.Windows.Forms.Label lblOveralProgress;
         private System.Windows.Forms.ProgressBar pgbOverallPercent;
         private System.Windows.Forms.Button btnClearUploadList;
+        private System.Windows.Forms.Button btnCreatePlaylists;
     }
 }
 

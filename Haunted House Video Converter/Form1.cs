@@ -23,6 +23,7 @@ namespace Haunted_House_Video_Converter
     {
         private ConvertAndMove preppingFilesForUpload = new ConvertAndMove();
         private UploadVideo testUpload = new UploadVideo();
+        private PlaylistUpdates thesePlaylists = new PlaylistUpdates();
 
         Settings set = Settings.Default;
 
@@ -263,6 +264,12 @@ namespace Haunted_House_Video_Converter
             int totalUploaded = set.UploadedVideos.Count;
             updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
 
+        }
+
+        private void btnCreatePlaylists_Click(object sender, EventArgs e)
+        {
+            thesePlaylists.createPlaylists();
+            btnCreatePlaylists.BackColor = Color.Green;
         }
     }
 }
