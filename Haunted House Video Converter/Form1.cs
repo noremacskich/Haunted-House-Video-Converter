@@ -86,6 +86,12 @@ namespace Haunted_House_Video_Converter
             txtCH14.Text = set.ChannelNames[13];
             txtCH15.Text = set.ChannelNames[14];
             txtCH16.Text = set.ChannelNames[15];
+
+            // Get the information needed to display the upload count
+            testUpload.lstConvertedFiles = preppingFilesForUpload.lstConvertedFiles;
+            int totalNumberToUpload = testUpload.lstFilesToUpload.Count();
+            int totalUploaded = set.UploadedVideos.Count;
+            updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
         }
 
         private void getSourceFolderPath()
@@ -251,6 +257,12 @@ namespace Haunted_House_Video_Converter
             set.UploadedVideos.Clear();
             set.UploadedVideoNames.Clear();
             set.Save();
+
+            // Update the total uploaded string
+            int totalNumberToUpload = testUpload.lstFilesToUpload.Count();
+            int totalUploaded = set.UploadedVideos.Count;
+            updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
+
         }
     }
 }

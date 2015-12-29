@@ -127,7 +127,7 @@ namespace Haunted_House_Video_Converter
         /// <param name="path">The full path to the file in question.</param>
         public string getDayOfWeek(string path)
         {
-            return path.Split('\\').Last().Split('-').Last().Trim();
+            return getVideoTitle(path).Split('-').Last().Trim();
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Haunted_House_Video_Converter
         /// <param name="path">The full path to the file in question.</param>
         public int getChannelNumber(string path)
         {
-            string channelID = getChannelId(videoSource);
+            string channelID = getChannelId(path);
             string numbersFromString = new String(channelID.Where(x => x >= '0' && x <= '9').ToArray());
             return Int32.Parse(numbersFromString);
         }
@@ -148,8 +148,6 @@ namespace Haunted_House_Video_Converter
         public async void upload()
         {
 
-            int totalNumberToUpload = lstFilesToUpload.Count();
-            int totalUploaded = set.UploadedVideos.Count;
 
             foreach (string thisFile in lstFilesToUpload)
             {
@@ -166,6 +164,9 @@ namespace Haunted_House_Video_Converter
 
                 FileInfo destinationAttributes = new FileInfo(thisFile);
                 totalNumberOfBytes = destinationAttributes.Length;
+
+                int totalNumberToUpload = lstFilesToUpload.Count();
+                int totalUploaded = set.UploadedVideos.Count;
 
 
                 int percentComplete = totalUploaded / totalNumberToUpload;
@@ -235,7 +236,9 @@ namespace Haunted_House_Video_Converter
             var video = new Video();
             video.Snippet = new VideoSnippet();
             video.Snippet.Title = videoTitle;
-            video.Snippet.Description = "Default Video Description";
+            video.Snippet.Description = "This is a security camera footage from the Madison Terror Trial's Haunted House of " + DateTime.Now.ToString("yyyy") + 
+                ".  Primary purpose of video survalance is for the safety of the scarers, and we want the ability to see what happened if something did.  " + 
+                "As a added side benifit, we can also enjoy the scares themselves at a later point.";
             video.Snippet.CategoryId = "22"; // See https://developers.google.com/youtube/v3/docs/videoCategories/list
 
             video.Snippet.Tags = new string[] {
