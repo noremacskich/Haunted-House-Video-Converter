@@ -121,6 +121,27 @@ namespace Haunted_House_Video_Converter
             return fullDateTime.Substring(7);
         }
 
+        /// <summary>
+        ///   Get the string "Thursday" from "09-31-16 PM - Thursday"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public string getDayOfWeek(string path)
+        {
+            return path.Split('\\').Last().Split('-').Last().Trim();
+        }
+
+        /// <summary>
+        ///   Get the string "1" from "CH01"
+        /// </summary>
+        /// <param name="path">The full path to the file in question.</param>
+        public int getChannelNumber(string path)
+        {
+            string channelID = getChannelId(videoSource);
+            string numbersFromString = new String(channelID.Where(x => x >= '0' && x <= '9').ToArray());
+            return Int32.Parse(numbersFromString);
+        }
+
+
 
 
         [STAThread]
@@ -135,14 +156,10 @@ namespace Haunted_House_Video_Converter
                 // Reset the progress bar
                 videoUpdate(0);
 
-                string channelID = getChannelId(thisFile);
 
                 string videoDate = getDateTime(thisFile);
 
-                string numbersFromString = new String(channelID.Where(x => x >= '0' && x <= '9').ToArray());
-                int channelNumber = Int32.Parse(numbersFromString);
-
-                videoTitle = set.ChannelNames[channelNumber - 1] + " - " + videoDate;
+                videoTitle = set.ChannelNames[getChannelNumber(thisFile) - 1] + " - " + videoDate;
                 videoSource = thisFile;
 
                 updatePath(thisFile);
@@ -189,6 +206,12 @@ namespace Haunted_House_Video_Converter
 
         private async Task Run()
         {
+
+
+            // Reset the counters
+            sumOfUploadedBytes = 0;
+
+
             UserCredential credential;
             using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
             {
@@ -214,6 +237,17 @@ namespace Haunted_House_Video_Converter
             video.Snippet.Title = videoTitle;
             video.Snippet.Description = "Default Video Description";
             video.Snippet.CategoryId = "22"; // See https://developers.google.com/youtube/v3/docs/videoCategories/list
+
+            video.Snippet.Tags = new string[] {
+                "Haunted House", // Just a generic Haunted House Tag
+                DateTime.Now.ToString("yyyy"), // The current year
+                getDayOfWeek(videoSource), // The day of the week
+                set.ChannelNames[getChannelNumber(videoSource) - 1].Split('-').Last().Trim(), // The Name of the channel
+                set.ChannelNames[getChannelNumber(videoSource) - 1].Split('-').First().Trim(), // The order of the room
+                "Madison Terror Trial"
+            };
+
+
             video.Status = new VideoStatus();
             video.Status.PrivacyStatus = "unlisted"; // or "private" or "public"
             //video.Snippet.Thumbnails.Standard.Url = "http://img.youtube.com/vi/" + video.Id + "/0.jpg";

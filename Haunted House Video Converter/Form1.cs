@@ -86,7 +86,6 @@ namespace Haunted_House_Video_Converter
             txtCH14.Text = set.ChannelNames[13];
             txtCH15.Text = set.ChannelNames[14];
             txtCH16.Text = set.ChannelNames[15];
-
         }
 
         private void getSourceFolderPath()
@@ -245,6 +244,12 @@ namespace Haunted_House_Video_Converter
             TextBox thisText = (TextBox)sender;
 
             set.ChannelNames[thisText.TabIndex] = thisText.Text;
+            set.Save();
+        }
+        private void btnClearUploadList_Click(object sender, EventArgs e)
+        {
+            set.UploadedVideos.Clear();
+            set.UploadedVideoNames.Clear();
             set.Save();
         }
     }
