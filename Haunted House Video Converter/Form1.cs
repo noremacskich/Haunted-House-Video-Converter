@@ -66,7 +66,6 @@ namespace Haunted_House_Video_Converter
                 }
             }
 
-
             // Also check to make sure that the Uploaded videos are intialized as well
             if (set.UploadedVideos == null) set.UploadedVideos = new System.Collections.Specialized.StringCollection();
             if (set.UploadedVideoNames == null) set.UploadedVideoNames = new System.Collections.Specialized.StringCollection();

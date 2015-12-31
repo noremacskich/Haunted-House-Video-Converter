@@ -90,9 +90,8 @@ namespace Haunted_House_Video_Converter
 
             if (set.PlayListIds.Count != 16) {
 
-                int numPlayLists = set.PlayListIds.Count + 1;
 
-                for(int i= numPlayLists; i<16; i++)
+                for(int i=0; i<16; i++)
                 {
 
 
