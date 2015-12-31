@@ -66,9 +66,11 @@ namespace Haunted_House_Video_Converter
                 }
             }
 
+
             // Also check to make sure that the Uploaded videos are intialized as well
             if (set.UploadedVideos == null) set.UploadedVideos = new System.Collections.Specialized.StringCollection();
             if (set.UploadedVideoNames == null) set.UploadedVideoNames = new System.Collections.Specialized.StringCollection();
+            if (set.PlayListIds == null) set.PlayListIds = new System.Collections.Specialized.StringCollection();
 
             // Give all the textboxes their values
             txtCH01.Text = set.ChannelNames[0];
@@ -93,6 +95,24 @@ namespace Haunted_House_Video_Converter
             int totalNumberToUpload = testUpload.lstFilesToUpload.Count();
             int totalUploaded = set.UploadedVideos.Count;
             updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
+
+
+            // Get the playlists
+            List<string> lstPlaylistNames = new List<string>();
+
+            string dayOfWeek = testUpload.getDayOfWeek(preppingFilesForUpload.lstConvertedFiles.First());
+
+            foreach (string name in set.ChannelNames)
+            {
+                lstPlaylistNames.Add("HH" + DateTime.Now.ToString("yy") + " - " + dayOfWeek + " - " + name);
+            }
+
+            // Be sure to pass over the names of the playlists
+            thesePlaylists.lstPlaylistNames = lstPlaylistNames;
+
+            thesePlaylists.createPlaylists();
+
+
         }
 
         private void getSourceFolderPath()
@@ -266,10 +286,5 @@ namespace Haunted_House_Video_Converter
 
         }
 
-        private void btnCreatePlaylists_Click(object sender, EventArgs e)
-        {
-            thesePlaylists.createPlaylists();
-            btnCreatePlaylists.BackColor = Color.Green;
-        }
     }
 }

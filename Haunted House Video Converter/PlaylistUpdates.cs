@@ -20,6 +20,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -27,6 +28,7 @@ using Google.Apis.Upload;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Haunted_House_Video_Converter.Properties;
 
 namespace Haunted_House_Video_Converter
 {
@@ -37,6 +39,11 @@ namespace Haunted_House_Video_Converter
     /// </summary>
     internal class PlaylistUpdates
     {
+        Settings set = Settings.Default;
+
+        /// <summary>This needs to be populated with the list of names before createPlaylists() is called.</summary>
+        public List<string> lstPlaylistNames { get; set; }
+
         [STAThread]
         public async void createPlaylists()
         {
@@ -80,25 +87,36 @@ namespace Haunted_House_Video_Converter
                 ApplicationName = this.GetType().ToString()
             });
 
-            // Create a new, private playlist in the authorized user's channel.
-            var newPlaylist = new Playlist();
-            newPlaylist.Snippet = new PlaylistSnippet();
-            newPlaylist.Snippet.Title = "Test Playlist";
-            newPlaylist.Snippet.Description = "A playlist created with the YouTube API v3";
-            newPlaylist.Status = new PlaylistStatus();
-            newPlaylist.Status.PrivacyStatus = "public";
-            newPlaylist = await youtubeService.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
 
-            // Add a video to the newly created playlist.
-            var newPlaylistItem = new PlaylistItem();
-            newPlaylistItem.Snippet = new PlaylistItemSnippet();
-            newPlaylistItem.Snippet.PlaylistId = newPlaylist.Id;
-            newPlaylistItem.Snippet.ResourceId = new ResourceId();
-            newPlaylistItem.Snippet.ResourceId.Kind = "youtube#video";
-            newPlaylistItem.Snippet.ResourceId.VideoId = "GNRMeaz6QRI";
-            newPlaylistItem = await youtubeService.PlaylistItems.Insert(newPlaylistItem, "snippet").ExecuteAsync();
+            if (set.PlayListIds.Count != 16) {
 
-            Console.WriteLine("Playlist item id {0} was added to playlist id {1}.", newPlaylistItem.Id, newPlaylist.Id);
+                int numPlayLists = set.PlayListIds.Count + 1;
+
+                for(int i= numPlayLists; i<16; i++)
+                {
+
+
+                    // Create a new, private playlist in the authorized user's channel.
+                    var newPlaylist = new Playlist();
+                    newPlaylist.Snippet = new PlaylistSnippet();
+                    newPlaylist.Snippet.Title = lstPlaylistNames[i];
+                    newPlaylist.Snippet.Description = "A playlist created with the YouTube API v3";
+                    newPlaylist.Status = new PlaylistStatus();
+                    newPlaylist.Status.PrivacyStatus = "public";
+                    newPlaylist = await youtubeService.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
+
+                    // Add this ID to the playlist
+                    set.PlayListIds.Add(newPlaylist.Id);
+
+
+                }
+                
+                
+                // either way, we should now have an updated value, so we need to save it.
+                set.Save();
+
+            }
+
         }
     }
 }

@@ -67,6 +67,8 @@ namespace Haunted_House_Video_Converter
 
         public List<string> lstConvertedFiles { get; set; }
 
+        private YouTubeService youtubeService { get; set; }
+
         /// <summary>
         /// Returns the list of strings that have yet to be uploaded to youtube.
         /// </summary>
@@ -220,17 +222,18 @@ namespace Haunted_House_Video_Converter
                     GoogleClientSecrets.Load(stream).Secrets,
                     // This OAuth 2.0 access scope allows an application to upload files to the
                     // authenticated user's YouTube channel, but doesn't allow other types of access.
-                    new[] { YouTubeService.Scope.YoutubeUpload },
+                    new[] { YouTubeService.Scope.Youtube },
                     "user",
-                    CancellationToken.None
+                    CancellationToken.None,
+                    new FileDataStore(this.GetType().ToString())
                 );
             }
 
 
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = Assembly.GetExecutingAssembly().GetName().Name
+                ApplicationName = this.GetType().ToString() //Assembly.GetExecutingAssembly().GetName().Name
             });
 
             var video = new Video();
@@ -295,9 +298,19 @@ namespace Haunted_House_Video_Converter
             }
         }
 
-        void videosInsertRequest_ResponseReceived(Video video)
+        async void videosInsertRequest_ResponseReceived(Video video)
         {
             Console.WriteLine("Video id '{0}' was successfully uploaded.", video.Id);
+
+            // Add a video to the newly created playlist.
+            var newPlaylistItem = new PlaylistItem();
+            newPlaylistItem.Snippet = new PlaylistItemSnippet();
+            newPlaylistItem.Snippet.PlaylistId = set.PlayListIds[getChannelNumber(video.Snippet.Title) - 1];
+            newPlaylistItem.Snippet.ResourceId = new ResourceId();
+            newPlaylistItem.Snippet.ResourceId.Kind = "youtube#video";
+            newPlaylistItem.Snippet.ResourceId.VideoId = video.Id;
+            newPlaylistItem = await youtubeService.PlaylistItems.Insert(newPlaylistItem, "snippet").ExecuteAsync();
+
         }
     }
 }
