@@ -103,7 +103,7 @@ namespace Haunted_House_Video_Converter
 
             foreach (string name in set.ChannelNames)
             {
-                lstPlaylistNames.Add("HH" + DateTime.Now.ToString("yy") + " - " + dayOfWeek + " - " + name);
+                lstPlaylistNames.Add("HH15" + " - " + dayOfWeek + " - " + name);
             }
 
             // Be sure to pass over the names of the playlists

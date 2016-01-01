@@ -57,8 +57,6 @@ namespace Haunted_House_Video_Converter
         Settings set = Settings.Default;
 
 
-        private long sumOfUploadedBytes { get; set; }
-
         public long totalNumberOfBytes { get; set; }
 
         public string videoTitle{ get; set; }
@@ -164,8 +162,10 @@ namespace Haunted_House_Video_Converter
 
                 updatePath(thisFile);
 
-                FileInfo destinationAttributes = new FileInfo(thisFile);
-                totalNumberOfBytes = destinationAttributes.Length;
+                // Get the size of the file being uploaded for the progress bar.
+                var fileStream = new FileStream(thisFile, FileMode.Open);
+                totalNumberOfBytes = fileStream.Length;
+                fileStream.Close();
 
                 int totalNumberToUpload = lstFilesToUpload.Count();
                 int totalUploaded = set.UploadedVideos.Count;
@@ -211,10 +211,6 @@ namespace Haunted_House_Video_Converter
         {
 
 
-            // Reset the counters
-            sumOfUploadedBytes = 0;
-
-
             UserCredential credential;
             using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
             {
@@ -239,14 +235,14 @@ namespace Haunted_House_Video_Converter
             var video = new Video();
             video.Snippet = new VideoSnippet();
             video.Snippet.Title = videoTitle;
-            video.Snippet.Description = "This is a security camera footage from the Madison Terror Trial's Haunted House of " + DateTime.Now.ToString("yyyy") + 
+            video.Snippet.Description = "This is a security camera footage from the Madison Terror Trial's Haunted House of " + "2015" + 
                 ".  Primary purpose of video survalance is for the safety of the scarers, and we want the ability to see what happened if something did.  " + 
                 "As a added side benifit, we can also enjoy the scares themselves at a later point.";
             video.Snippet.CategoryId = "22"; // See https://developers.google.com/youtube/v3/docs/videoCategories/list
 
             video.Snippet.Tags = new string[] {
                 "Haunted House", // Just a generic Haunted House Tag
-                DateTime.Now.ToString("yyyy"), // The current year
+                "2015", // The current year
                 getDayOfWeek(videoSource), // The day of the week
                 set.ChannelNames[getChannelNumber(videoSource) - 1].Split('-').Last().Trim(), // The Name of the channel
                 set.ChannelNames[getChannelNumber(videoSource) - 1].Split('-').First().Trim(), // The order of the room
@@ -260,7 +256,11 @@ namespace Haunted_House_Video_Converter
 
             using (var fileStream = new FileStream(videoSource, FileMode.Open))
             {
+                const int KB = 0x400;
+                var minimumChunkSize = 256 * KB;
+
                 var videosInsertRequest = youtubeService.Videos.Insert(video, "snippet,status", fileStream, "video/*");
+                videosInsertRequest.ChunkSize = minimumChunkSize * 5;
                 videosInsertRequest.ProgressChanged += videosInsertRequest_ProgressChanged;
                 videosInsertRequest.ResponseReceived += videosInsertRequest_ResponseReceived;
 
@@ -279,9 +279,7 @@ namespace Haunted_House_Video_Converter
                     Console.WriteLine("{0} bytes sent.", progress.BytesSent);
 
                     // Get the sum of all the bytes
-                    sumOfUploadedBytes += progress.BytesSent;
-
-                    int percentComplete = (int)(((double)sumOfUploadedBytes / (double)totalNumberOfBytes)*100);
+                    int percentComplete = (int)(((double)progress.BytesSent / (double)totalNumberOfBytes)*100);
 
                     if (percentComplete > 100) percentComplete = 100;
 
