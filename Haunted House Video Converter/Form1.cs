@@ -93,8 +93,8 @@ namespace Haunted_House_Video_Converter
             testUpload.lstConvertedFiles = preppingFilesForUpload.lstConvertedFiles;
             int totalNumberToUpload = testUpload.lstFilesToUpload.Count();
             int totalUploaded = set.UploadedVideos.Count;
-            updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
-
+            updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + preppingFilesForUpload.lstConvertedFiles.Count.ToString() + " have been uploaded.");
+            UpdateOverallProgressBar((int)(((float)totalUploaded / (float)set.numberOfVideos) * 100));
 
             // Get the playlists
             List<string> lstPlaylistNames = new List<string>();
@@ -163,6 +163,8 @@ namespace Haunted_House_Video_Converter
             setTextBoxesEnabled(false);
             // For now, just wanting to see if the uploading will actually work.
             // Need to work on getting the list of files uploaded already
+
+            set.numberOfVideos = preppingFilesForUpload.lstConvertedFiles.Count();
 
             testUpload.lstConvertedFiles = preppingFilesForUpload.lstConvertedFiles;
 

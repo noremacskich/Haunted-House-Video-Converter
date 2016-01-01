@@ -167,14 +167,11 @@ namespace Haunted_House_Video_Converter
                 totalNumberOfBytes = fileStream.Length;
                 fileStream.Close();
 
-                int totalNumberToUpload = lstFilesToUpload.Count();
+
                 int totalUploaded = set.UploadedVideos.Count;
 
-
-                int percentComplete = totalUploaded / totalNumberToUpload;
-
-                updatedOverallStatus("A total of " + totalUploaded.ToString() + " videos out of " + totalNumberToUpload + " have been uploaded.");
-                updatedOverallProgress(percentComplete);
+                updatedOverallStatus("A total of " + totalUploaded.ToString() + " videos out of " + set.numberOfVideos + " have been uploaded.");
+                updatedOverallProgress((int)(((float)totalUploaded / (float)set.numberOfVideos) * 100));
 
 
                 try

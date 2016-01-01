@@ -66,5 +66,17 @@ namespace Haunted_House_Video_Converter.Properties {
                 this["PlayListIds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int numberOfVideos {
+            get {
+                return ((int)(this["numberOfVideos"]));
+            }
+            set {
+                this["numberOfVideos"] = value;
+            }
+        }
     }
 }
