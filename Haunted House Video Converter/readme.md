@@ -48,10 +48,10 @@ Basic Flow Chart
  - Get folder with all vids (select path dialog)
  - Create playlists, if not already stored in user settings
    - For each playlist
-     - Name it "HH<yy> - Thursday - <Channel Order> - <Channel Name>"
-       - <yy> - is the last two digits of the video year
-	 - <Channel Order> - is the correct sequence number that the vidoe should be watched in.
-	 - <Channel Name> - is the name of the channel specified by the textboxes on the lower half of the form
+     - Name it "HH\[yy\] - Thursday - \[Channel Order\] - \[Channel Name\]"
+       - \[yy\] - is the last two digits of the video year
+        - \[Channel Order\] - is the correct sequence number that the vidoe should be watched in.
+         - \[Channel Name\] - is the name of the channel specified by the textboxes on the lower half of the form
      - store said name in the "PlaylistNames" user setting
      - Create playlist in youtube account
      - store playlist ID in "PlaylistId" user setting
@@ -78,11 +78,11 @@ Basic Flow Chart
      - Give it a description of "This is a security camera footage from the Madison Terror Trial's Haunted House of 2015.  Primary purpose of video survalance is for the safety of the scarers, and we want the ability to see what happened if something did.  As a added side benefit, we can also enjoy the scares themselves at a later point."
      - Give it the following tags
        - "Haunted House"
-	   - "\[year\]"
-	   - "\[day of week\]"
-	   - "\[name of channel\]"
-	   - "\[room order\]"
-	   - "Madison Terror Trial"
+        - "\[year\]"
+        - "\[day of week\]"
+        - "\[name of channel\]"
+        - "\[room order\]"
+        - "Madison Terror Trial"
      - make it an unlisted video
      - Upload it, update video upload status bar while doing so
      - When finished, associate video with appropriate playlist
