@@ -96,6 +96,10 @@ namespace Haunted_House_Video_Converter
             updateFilesStatus("A total of " + totalUploaded.ToString() + " videos out of " + preppingFilesForUpload.lstConvertedFiles.Count.ToString() + " have been uploaded.");
             UpdateOverallProgressBar((int)(((float)totalUploaded / (float)set.numberOfVideos) * 100));
 
+            if (set.ChannelNames == null || set.PlayListIds == null)
+            {
+                DialogResult isYes = MessageBox.Show("Create Playlists?", "No existing Playlists", MessageBoxButtons.YesNo);
+            }
             // Get the playlists
             List<string> lstPlaylistNames = new List<string>();
 
@@ -111,6 +115,17 @@ namespace Haunted_House_Video_Converter
 
             thesePlaylists.createPlaylists();
 
+            getPlaylistURLs();
+
+        }
+
+        private void getPlaylistURLs()
+        {
+            txtPlaylists.Clear();
+            for(int i = 0; i< 16; i++)
+            {
+                txtPlaylists.AppendText(set.ChannelNames[i] + " - " + "https://www.youtube.com/playlist?list=" + set.PlayListIds[i]);
+            }
 
         }
 
