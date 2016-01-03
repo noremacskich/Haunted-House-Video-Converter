@@ -210,7 +210,7 @@
     <Content Include="avctoavi converter\License.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="readme.txt" />
+    <None Include="readme.md" />
     <Content Include="SampleFiles\CH01 - 05-51-10 PM - Saturday.avi" />
     <Content Include="SampleFiles\CH02 - 05-52-02 PM - Saturday.avi" />
   </ItemGroup>
