@@ -234,8 +234,10 @@ namespace Haunted_House_Video_Converter
             video.Snippet.Title = videoTitle;
             video.Snippet.Description = "This is a security camera footage from the Madison Terror Trial's Haunted House of " + "2015" + 
                 ".  Primary purpose of video survalance is for the safety of the scarers, and we want the ability to see what happened if something did.  " + 
-                "As a added side benifit, we can also enjoy the scares themselves at a later point.";
-            video.Snippet.CategoryId = "22"; // See https://developers.google.com/youtube/v3/docs/videoCategories/list
+                "As a added side benefit, we can also enjoy the scares themselves at a later point.";
+            // See https://developers.google.com/youtube/v3/docs/videoCategories/list
+            // to get list, see http://stackoverflow.com/a/28539752/3271665
+            video.Snippet.CategoryId = "29"; // Non profits and Activism 
 
             video.Snippet.Tags = new string[] {
                 "Haunted House", // Just a generic Haunted House Tag
