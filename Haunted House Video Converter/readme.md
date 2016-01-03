@@ -74,15 +74,15 @@ Basic Flow Chart
  - User fills out the names of the channels
  - User hits the upload videos button
    - for each video
-     - Give it a title of "<Channel Name> - <Video Date>"
+     - Give it a title of "\[Channel Name\] - \[Video Date\]"
      - Give it a description of "This is a security camera footage from the Madison Terror Trial's Haunted House of 2015.  Primary purpose of video survalance is for the safety of the scarers, and we want the ability to see what happened if something did.  As a added side benefit, we can also enjoy the scares themselves at a later point."
-     - Give it the following tags :
+     - Give it the following tags
        - "Haunted House"
-	 - "<year>"
-	 - "<day of week>
-	 - "<name of channel>
-	 - "<room order>"
-	 - "Madison Terror Trial"
+	   - "\[year\]"
+	   - "\[day of week\]"
+	   - "\[name of channel\]"
+	   - "\[room order\]"
+	   - "Madison Terror Trial"
      - make it an unlisted video
      - Upload it, update video upload status bar while doing so
      - When finished, associate video with appropriate playlist
